@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浄水システム - 最初沈殿池</title>
+    <link rel="stylesheet" href="../shared/common.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="animation-container">
+        <div class="left-section">
+            <div class="title-area">
+                <h1 class="title">最初沈殿池</h1>
+            </div>
+            
+            <div class="caption-area">
+                <p class="caption">
+                    汚水をゆっくり流すと、多くのごみは沈みます。浮くごみもあります。
+                    <br>これらのごみは、汚泥処理施設に運ばれます。
+                </p>
+            </div>
+        </div>
+        
+        <div class="right-section">
+            <div class="animation-area">
+                <div class="animation-container-wrapper">
+                    <!-- ベース画像 -->
+                    <img src="../../material/01_base.svg" alt="沈殿池ベース" class="base-image">
+                    
+                    <!-- スクレーパーアニメーション用コンテナ -->
+                    <div class="scraper-container" id="scraperContainer">
+                        <!-- L字型のトラックとブレード（動的に生成される） -->
+                    </div>
+                    
+                    <!-- 説明用レイヤー -->
+                    <div class="explanation-layer">
+                        <!-- 吹き出し -->
+                        <div class="bubble explanation-bubble bubble--bottom" id="bubble-biological">生物反応そうへ</div>
+                        <div class="bubble explanation-bubble bubble--bottom" id="bubble-sludge-treatment1">汚泥処理施設へ</div>
+                        <div class="bubble explanation-bubble bubble--left" id="bubble-inflow">流入水</div>
+                        <div class="bubble explanation-bubble bubble--left" id="bubble-sludge-treatment2">汚泥処理施設へ</div>
+                        <div class="bubble explanation-bubble bubble--top-long" id="bubble-scraper">汚泥かき寄せ機</div>
+                        
+                        <!-- 矢印 -->
+                        <img src="../../material/allow_top.svg" class="arrow" id="arrow-1" alt="上矢印">
+                        <img src="../../material/allow_top.svg" class="arrow" id="arrow-2" alt="上矢印">
+                        <img src="../../material/allow_left_long.svg" class="arrow" id="arrow-3" alt="左矢印長">
+                        <img src="../../material/allow_left_long.svg" class="arrow" id="arrow-4" alt="左矢印長">
+                        <img src="../../material/allow_left_long.svg" class="arrow" id="arrow-5" alt="左矢印長">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

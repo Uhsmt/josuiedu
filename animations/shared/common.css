@@ -1,0 +1,167 @@
+/* 共通スタイル */
+:root {
+  --water-clean: #4A90E2;
+  --water-dirty: #8B4513;
+  --water-middle: #D2691E;
+  --concrete: #C0C0C0;
+  --metal: #708090;
+  --background: #F0F8FF;
+  --text-color: #2C3E50;
+  --caption-bg: rgba(255, 255, 255, 0.9);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.animation-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+.title-area {
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: clamp(15px, 3vh, 30px) clamp(20px, 4vw, 40px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.title-area::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+  pointer-events: none;
+}
+
+.title {
+  font-size: clamp(24px, 4vw, 48px);
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 1;
+}
+
+.animation-area {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(10px, 2vh, 20px);
+  background: var(--background);
+}
+
+.main-animation {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  background: white;
+}
+
+.caption-area {
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+  color: white;
+  padding: clamp(20px, 4vh, 40px) clamp(20px, 4vw, 40px);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+}
+
+.caption {
+  font-size: clamp(14px, 2vw, 24px);
+  text-align: left;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 400;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.bubble {
+  position: absolute;
+  background: white;
+  border: 2px solid var(--text-color);
+  border-radius: 20px;
+  padding: 10px 15px;
+  font-size: clamp(12px, 1.5vw, 20px);
+  z-index: 5;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.bubble::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+}
+
+.bubble--bottom::after {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-color: white;
+}
+
+.bubble--top::after {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-color: white;
+}
+
+.bubble--left::after {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-right-color: white;
+}
+
+.bubble--right::after {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left-color: white;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .title {
+    font-size: 20px;
+    padding: 8px 16px;
+  }
+  
+  .caption {
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+  
+  .bubble {
+    font-size: 10px;
+    padding: 8px 12px;
+  }
+}

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>掻き寄せ機テスト</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #222;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-container {
+            width: 1200px;
+            height: 700px;
+            background: white;
+            position: relative;
+            margin: 20px auto;
+            border: 2px solid #666;
+        }
+        
+        /* scraper-trackのスタイルは動的に生成される */
+        
+        /* 共有境界線を隠す */
+        .track-main {
+            border-left: none; /* メイン長方形の左辺を完全に消す */
+        }
+        
+        .track-extension {
+            border-right: none; /* 突出部分の右辺（共有部分）を消す */
+        }
+        
+        /* border-partialのスタイルは動的に生成される */
+        
+        
+        /* ブレードのスタイルは動的に生成される */
+        
+        /* 直角三角形のブレード（サイズは動的に設定される） */
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        button.stop {
+            background: #f44336;
+        }
+        
+        button.stop:hover {
+            background: #da190b;
+        }
+    </style>
+</head>
+<body>
+    <h1>掻き寄せ機アニメーションテスト</h1>
+    
+    <div class="controls">
+        <button onclick="startAnimation()">開始</button>
+        <button onclick="stopAnimation()" class="stop">停止</button>
+        <button onclick="resetAnimation()">リセット</button>
+    </div>
+    
+    <div class="test-container" id="testContainer">
+        <!-- L字型のトラック（動的に生成される） -->
+        
+        <!-- 掻き寄せブレード（動的に生成） -->
+    </div>
+    
+    <script>
+        // === 設定変数（サイズや配置を変更する際はここを調整） ===
+        const CONFIG = {
+            // 基本設定
+            borderWidth: 8,        // 線の太さ
+            bladeSize: 20,         // 三角ブレードの基本サイズ
+            bladeSpacing: 100,     // ブレード間の距離
+            speed: 1,              // アニメーション速度（ピクセル/フレーム）
+            
+            // メイン長方形
+            main: {
+                width: 300,
+                height: 320,
+                top: 200,      // 100から200に変更（100px下に移動）
+                left: 600      // 700から600に変更（100px左に移動）
+            },
+            
+            // 突出部分
+            extension: {
+                width: 400,
+                height: 100
+            }
+        };
+        
+        // === 計算された値 ===
+        let animationId = null;
+        let blades = [];
+        let currentPosition = 0;
+        const speed = CONFIG.speed;
+        const bladeSpacing = CONFIG.bladeSpacing;
+        
+        // L字型軌道の設定（計算で配置）
+        const track = {
+            main: {
+                top: CONFIG.main.top,
+                left: CONFIG.main.left,
+                width: CONFIG.main.width,
+                height: CONFIG.main.height
+            },
+            extension: {
+                top: CONFIG.main.top + CONFIG.main.height - CONFIG.extension.height,  // 底辺をメインの底辺と合わせる
+                left: CONFIG.main.left - CONFIG.extension.width,  // 右端がメイン左端に接続
+                width: CONFIG.extension.width,
+                height: CONFIG.extension.height
+            }
+        };
+        
+        // L字型軌道の全周長を計算
+        function calculateLPerimeter() {
+            // メイン長方形：上辺 + 右辺 + 下辺（全幅）
+            const mainTop = track.main.width;
+            const mainRight = track.main.height; 
+            const mainBottom = track.main.width;
+            
+            // 突出部分：下辺 + 左辺 + 上辺（共有境界線を除く）
+            const extBottom = track.extension.width;
+            const extLeft = track.extension.height;
+            const extTop = track.extension.width - (CONFIG.bladeSize/2 + CONFIG.borderWidth); // 三角サイズ半分 + 境界線重複分を短縮
+            
+            // メイン長方形の左辺上部のみ（共有部分を除く）
+            const mainLeftTop = track.extension.top - track.main.top;
+            
+            return mainTop + mainRight + mainBottom + extBottom + extLeft + extTop + mainLeftTop;
+        }
+        
+        const perimeter = calculateLPerimeter();
+        const bladeCount = Math.floor(perimeter / bladeSpacing);
+        
+        // ブレードのCSSスタイルを動的生成（L字型）
+        function initBladeStyles() {
+            const style = document.createElement('style');
+            const size = CONFIG.bladeSize;
+            const thickness = Math.floor(size / 3); // L字の太さ
+            style.textContent = `
+                /* L字型ブレードの基本設定 */
+                .scraper-blade {
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    transition: none;
+                }
+                
+                /* L字型ブレード：上向き（⅃の形・逆L字） */
+                .blade-top::before {
+                    content: '';
+                    position: absolute;
+                    width: ${thickness}px;
+                    height: ${size}px;
+                    background: black;
+                    right: 0;
+                    top: 0;
+                }
+                .blade-top::after {
+                    content: '';
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${thickness}px;
+                    background: black;
+                    left: 0;
+                    bottom: 0;
+                }
+                
+                /* L字型ブレード：右向き（⊢の形） */
+                .blade-right::before {
+                    content: '';
+                    position: absolute;
+                    width: ${thickness}px;
+                    height: ${size}px;
+                    background: black;
+                    left: 0;
+                    top: 0;
+                }
+                .blade-right::after {
+                    content: '';
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${thickness}px;
+                    background: black;
+                    left: 0;
+                    bottom: 0;
+                }
+                
+                /* L字型ブレード：下向き（Γを180度回転した形） */
+                .blade-bottom::before {
+                    content: '';
+                    position: absolute;
+                    width: ${thickness}px;
+                    height: ${size}px;
+                    background: black;
+                    left: 0;
+                    top: 0;
+                }
+                .blade-bottom::after {
+                    content: '';
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${thickness}px;
+                    background: black;
+                    left: 0;
+                    top: 0;
+                }
+                
+                /* L字型ブレード：左向き（⊣の形） */
+                .blade-left::before {
+                    content: '';
+                    position: absolute;
+                    width: ${thickness}px;
+                    height: ${size}px;
+                    background: black;
+                    right: 0;
+                    top: 0;
+                }
+                .blade-left::after {
+                    content: '';
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${thickness}px;
+                    background: black;
+                    left: 0;
+                    top: 0;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // トラック関連のCSSスタイルを動的生成
+        function initTrackStyles() {
+            const style = document.createElement('style');
+            style.textContent = `
+                .scraper-track {
+                    position: absolute;
+                    border: ${CONFIG.borderWidth}px solid black;
+                    background: none;
+                    box-sizing: border-box;
+                }
+                
+                .track-main {
+                    border-left: none !important; /* メイン長方形の左辺を完全に消す */
+                }
+                
+                .track-extension {
+                    border-right: none !important; /* 突出部分の右辺（共有部分）を消す */
+                }
+                
+                .border-partial {
+                    position: absolute;
+                    border-left: ${CONFIG.borderWidth}px solid black;
+                    z-index: 5;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // トラックのHTMLを動的生成
+        function initTrack() {
+            const container = document.getElementById('testContainer');
+            
+            // メイン長方形（左辺なし）
+            const mainTrack = document.createElement('div');
+            mainTrack.className = 'scraper-track track-main';
+            mainTrack.style.cssText = `top: ${track.main.top}px; left: ${track.main.left}px; width: ${track.main.width}px; height: ${track.main.height}px;`;
+            container.appendChild(mainTrack);
+            
+            // 突出部分（右辺なし）
+            const extTrack = document.createElement('div');
+            extTrack.className = 'scraper-track track-extension';
+            extTrack.style.cssText = `top: ${track.extension.top}px; left: ${track.extension.left}px; width: ${track.extension.width}px; height: ${track.extension.height}px;`;
+            container.appendChild(extTrack);
+            
+            // メイン長方形の左辺上部のみを描画
+            const borderPartial = document.createElement('div');
+            borderPartial.className = 'border-partial';
+            const partialHeight = track.extension.top - track.main.top;
+            const partialLeft = track.main.left - CONFIG.borderWidth;
+            borderPartial.style.cssText = `top: ${track.main.top}px; left: ${partialLeft}px; width: 0px; height: ${partialHeight}px;`;
+            container.appendChild(borderPartial);
+        }
+        
+        // ブレードを初期化
+        function initBlades() {
+            const container = document.getElementById('testContainer');
+            
+            // 既存のブレードを削除
+            blades.forEach(blade => {
+                if (blade.element && blade.element.parentNode) {
+                    blade.element.parentNode.removeChild(blade.element);
+                }
+            });
+            blades = [];
+            
+            // デバッグ情報追加
+            console.log('計算された全周長:', perimeter);
+            console.log('ブレード数:', bladeCount);
+            
+            // ブレードを生成
+            for (let i = 0; i < bladeCount; i++) {
+                const blade = document.createElement('div');
+                blade.className = 'scraper-blade blade-top'; // 初期向き設定
+                container.appendChild(blade);
+                
+                const position = (i * bladeSpacing) % perimeter;
+                
+                blades.push({
+                    element: blade,
+                    position: position
+                });
+            }
+            
+            console.log('生成したブレード数:', blades.length);
+            
+            // 初期位置を設定
+            updateBlades();
+        }
+        
+        // L字型軌道での位置からXY座標と向きを計算
+        function getBladeTransform(position) {
+            const normalizedPos = position % perimeter;
+            let cumulativeLength = 0;
+            let x, y, direction;
+            
+            // デバッグ用
+            if (position === 0) {
+                console.log('デバッグ - normalizedPos:', normalizedPos, 'perimeter:', perimeter);
+            }
+            
+            // 1. メイン長方形の上辺 (左から右へ)
+            const seg1 = track.main.width;
+            if (normalizedPos < cumulativeLength + seg1) {
+                const localPos = normalizedPos - cumulativeLength;
+                x = track.main.left + localPos - CONFIG.bladeSize/2;
+                y = track.main.top - CONFIG.bladeSize;
+                direction = 'top';
+                if (position === 0) console.log('セグメント1:', { x, y, direction });
+                return { x, y, direction };
+            }
+            cumulativeLength += seg1;
+            
+            // 2. メイン長方形の右辺 (上から下へ)
+            const seg2 = track.main.height;
+            if (normalizedPos < cumulativeLength + seg2) {
+                const localPos = normalizedPos - cumulativeLength;
+                x = track.main.left + track.main.width;
+                y = track.main.top + localPos - CONFIG.bladeSize/2;
+                direction = 'right';
+                return { x, y, direction };
+            }
+            cumulativeLength += seg2;
+            
+            // 3. メイン長方形の下辺 (右から左端まで全部)
+            const seg3 = track.main.width;
+            if (normalizedPos < cumulativeLength + seg3) {
+                const localPos = normalizedPos - cumulativeLength;
+                x = track.main.left + track.main.width - localPos - CONFIG.bladeSize/2;
+                y = track.main.top + track.main.height;
+                direction = 'bottom';
+                return { x, y, direction };
+            }
+            cumulativeLength += seg3;
+            
+            // 4. 突出部分の下辺 (接続点から左へ)
+            const seg4 = track.extension.width;
+            if (normalizedPos < cumulativeLength + seg4) {
+                const localPos = normalizedPos - cumulativeLength;
+                x = track.main.left - localPos - CONFIG.bladeSize/2; // メイン左端から開始
+                y = track.extension.top + track.extension.height;
+                direction = 'bottom';
+                return { x, y, direction };
+            }
+            cumulativeLength += seg4;
+            
+            // 5. 突出部分の左辺 (下から上へ)
+            const seg5 = track.extension.height;
+            if (normalizedPos < cumulativeLength + seg5) {
+                const localPos = normalizedPos - cumulativeLength;
+                x = track.extension.left - CONFIG.bladeSize;
+                y = track.extension.top + track.extension.height - localPos - CONFIG.bladeSize/2;
+                direction = 'left';
+                return { x, y, direction };
+            }
+            cumulativeLength += seg5;
+            
+            // 6. 突出部分の上辺 (左から右へ、三角の底辺右端まで)
+            const seg6 = track.extension.width - 20; // 三角形サイズ12px + 境界線重複8px = 20px短縮
+            if (normalizedPos < cumulativeLength + seg6) {
+                const localPos = normalizedPos - cumulativeLength;
+                x = track.extension.left + localPos - CONFIG.bladeSize/2;
+                y = track.extension.top - CONFIG.bladeSize;
+                direction = 'top';
+                return { x, y, direction };
+            }
+            cumulativeLength += seg6;
+            
+            // 7. メイン長方形の左辺上部のみ (突出部分の上端から上へ)
+            const seg7 = track.extension.top - track.main.top;
+            const localPos = normalizedPos - cumulativeLength;
+            x = track.main.left - CONFIG.bladeSize - CONFIG.borderWidth; // 線の太さ分さらに左にずらす
+            y = track.extension.top - localPos - CONFIG.bladeSize/2;
+            direction = 'left';
+            
+            return { x, y, direction };
+        }
+        
+        // ブレードの位置を更新
+        function updateBlades() {
+            blades.forEach(blade => {
+                const transform = getBladeTransform(blade.position);
+                
+                blade.element.style.left = transform.x + 'px';
+                blade.element.style.top = transform.y + 'px';
+                blade.element.className = `scraper-blade blade-${transform.direction}`;
+                
+                // 位置を進める（L字軌道の正しい周長を使用）
+                blade.position = (blade.position + speed) % perimeter;
+            });
+        }
+        
+        // アニメーション開始
+        function startAnimation() {
+            if (animationId) return;
+            
+            function animate() {
+                updateBlades();
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+        
+        // アニメーション停止
+        function stopAnimation() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+        }
+        
+        // リセット
+        function resetAnimation() {
+            stopAnimation();
+            initBlades();
+        }
+        
+        // 初期化
+        window.onload = function() {
+            initBladeStyles();
+            initTrackStyles();
+            initTrack();
+            initBlades();
+        };
+    </script>
+</body>
+</html>

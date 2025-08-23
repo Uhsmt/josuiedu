@@ -1,0 +1,80 @@
+/* 生物反応槽専用スタイル */
+
+/* 共通CSSの縦レイアウトを上書き */
+.animation-container {
+    display: flex !important;
+    flex-direction: row !important;
+    min-height: 100vh;
+    height: 100vh !important;
+    width: 100vw !important;
+    margin: 0;
+    padding: 0;
+}
+
+.left-section {
+    width: 400px;
+    background: #f8f9fa;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+/* 共通CSSのtitle-areaスタイルを上書き */
+.left-section .title-area {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    padding: 30px 40px !important;
+    border-radius: 0 !important;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 共通CSSのcaption-areaスタイルを上書き */
+.left-section .caption-area {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%) !important;
+    padding: 40px !important;
+    border-radius: 0 !important;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-section .caption {
+    font-size: clamp(12px, 1.5vw, 18px) !important;
+}
+
+.right-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    min-height: 100vh;
+}
+
+/* 共通CSSのanimation-areaスタイルを上書き */
+.right-section .animation-area {
+    flex: none !important;
+    min-height: auto !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+.animation-container-wrapper {
+    position: relative;
+    width: 1000px;
+    height: 750px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.base-image {
+    width: 1000px;
+    height: auto;
+    display: block;
+}
