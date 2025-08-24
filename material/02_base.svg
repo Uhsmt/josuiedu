@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 737.01 396.85">
+  <!-- Generator: Adobe Illustrator 29.3.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 146)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #d0e17a;
+        stroke-width: .75px;
+      }
+
+      .st0, .st1 {
+        stroke: #231815;
+        stroke-miterlimit: 10;
+      }
+
+      .st2 {
+        fill: #e1ad68;
+      }
+
+      .st3 {
+        stroke-dasharray: 15.47 15.47;
+      }
+
+      .st3, .st4 {
+        fill: none;
+        stroke: #f0c88e;
+        stroke-linejoin: bevel;
+        stroke-width: 19px;
+      }
+
+      .st5 {
+        fill: #898989;
+      }
+
+      .st1 {
+        fill: #4abbb4;
+      }
+
+      .st6 {
+        fill: #f5cc90;
+      }
+
+      .st7 {
+        display: none;
+        fill: url(#_名称未設定グラデーション_5);
+      }
+
+      .st8 {
+        fill: #6ab82d;
+      }
+
+      .st9 {
+        fill: url(#_名称未設定グラデーション_77);
+      }
+    </style>
+    <linearGradient id="_名称未設定グラデーション_5" data-name="名称未設定グラデーション 5" x1="437.06" y1="567.72" x2="437.06" y2="-3.05" gradientTransform="translate(0 567.07) scale(1 -1)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f5cc90"/>
+      <stop offset="1" stop-color="#9a2724"/>
+    </linearGradient>
+    <linearGradient id="_名称未設定グラデーション_77" data-name="名称未設定グラデーション 77" x1="23.01" y1="127.95" x2="51.35" y2="127.95" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4eb133"/>
+      <stop offset="1" stop-color="#f5cc90"/>
+      <stop offset="1" stop-color="#040000"/>
+    </linearGradient>
+  </defs>
+  <g id="_レイヤー_1" data-name="レイヤー_1">
+    <rect class="st6" x="51.35" y="112.85" width="331.65" height="255.12"/>
+    <rect class="st7" x="186.33" y="-.65" width="501.46" height="570.77"/>
+    <rect class="st2" x="383.01" y="112.85" width="170.08" height="255.12"/>
+    <rect class="st2" x="553.09" y="112.85" width="170.08" height="255.12"/>
+  </g>
+  <g id="_レイヤー_2" data-name="レイヤー_2">
+    <path class="st5" d="M374.5,56.38h17.01v311.81h-17.01V56.38ZM544.58,56.38h17.01v311.81h-17.01V56.38ZM51.35,396.54h-17.01V56.38h17.01v340.16ZM731.67,56.38h-17.01v340.16h17.01V56.38ZM714.65,396.54v-28.35H51.35v28.35h663.31-.01Z"/>
+  </g>
+  <g id="_レイヤー_3" data-name="レイヤー_3">
+    <rect class="st1" x="127.89" y="337.01" width="48.59" height="11.34"/>
+    <rect class="st1" x="249.37" y="337.01" width="48.59" height="11.34"/>
+    <g>
+      <path class="st0" d="M493.8,337.08h-51.5l-1.82,11.37c0,5.44,12.34,9.85,27.57,9.85s27.57-4.41,27.57-9.85l-1.82-11.37"/>
+      <ellipse class="st0" cx="468.05" cy="336.67" rx="25.75" ry="6.74"/>
+      <path class="st0" d="M477.62,297.68c1.73,11.51,4.78,34.25,4.78,35.6,0,2.54-6.51,4.59-14.53,4.59s-14.53-2.06-14.53-4.59c0-1.35,2.15-19.56,4.78-35.6"/>
+      <ellipse class="st0" cx="467.87" cy="297.68" rx="9.75" ry="2.51"/>
+    </g>
+    <g>
+      <path class="st0" d="M663.88,337.08h-51.5l-1.82,11.37c0,5.44,12.34,9.85,27.57,9.85s27.57-4.41,27.57-9.85l-1.82-11.37"/>
+      <ellipse class="st0" cx="638.13" cy="336.67" rx="25.75" ry="6.74"/>
+      <path class="st0" d="M647.7,297.68c1.73,11.51,4.78,34.25,4.78,35.6,0,2.54-6.51,4.59-14.53,4.59s-14.53-2.06-14.53-4.59c0-1.35,2.15-19.56,4.78-35.6"/>
+      <ellipse class="st0" cx="637.95" cy="297.68" rx="9.75" ry="2.51"/>
+    </g>
+  </g>
+  <g id="_レイヤー_4" data-name="レイヤー_4">
+    <path class="st6" d="M73.18,112.85v-16.44h18.71v16.44h-18.71ZM102.38,96.41l-19.84-23.25-19.84,23.25h39.69Z"/>
+    <path class="st9" d="M51.35,137.17h-28.35v-18.43h28.35v18.43ZM23.25,108.11L0,127.95l23.25,19.84v-39.69Z"/>
+    <path class="st6" d="M477.4,68.43v16.44h-18.71v-16.44h18.71ZM448.2,84.86l19.84,23.25,19.84-23.25h-39.69Z"/>
+    <g>
+      <path class="st4" d="M82.54,68.43h0c.79-2.37,1.66-4.72,2.63-7.02"/>
+      <path class="st3" d="M92.43,47.77c7.98-11.95,19.36-21.27,34.89-24.7,85.4-18.84,264.69-18.07,303,2.33,14.37,7.65,27.98,16.21,34.2,28.34"/>
+      <path class="st4" d="M467.2,60.99c.55,2.35.85,4.83.85,7.44h0"/>
+    </g>
+    <path class="st8" d="M647.48,68.43v16.44h-18.71v-16.44h18.71ZM618.28,84.86l19.84,23.25,19.84-23.25h-39.69Z"/>
+  </g>
+</svg>

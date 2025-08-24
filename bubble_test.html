@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>撹拌バブル（成長＆消失）</title>
+<style>
+  :root{
+    --bubble:#ffffff; /* 泡を白に */
+    --bubble-area:#f5cc90; /* 発生エリアの背景色 */
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;display:grid;place-items:center;min-height:100dvh;background:var(--bg-orange);
+    font-family:system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+  }
+  .tank{position:relative; width:150px; height:250px; background:var(--bubble-area); border-radius:8px; box-shadow:0 0 0 6px var(--bg-orange) inset;}
+  canvas{position:absolute; inset:6px; width:calc(100% - 12px); height:calc(100% - 12px); display:block; background:var(--bubble-area); border-radius:4px}
+  .ui{position:fixed; right:10px; bottom:10px; font-size:12px; color:#333; background:#fff; padding:.25rem .5rem; border-radius:.5rem; opacity:.7}
+</style>
+</head>
+<body>
+  <div class="tank">
+    <canvas id="c"></canvas>
+  </div>
+  <div class="ui">装置なしで泡だけ</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('c');
+  const ctx = canvas.getContext('2d', { alpha:false });
+  let W=0, H=0, dpr=Math.max(1, devicePixelRatio||1);
+
+  const CFG = {
+    spawnPerSec: 25,
+    baseRise: 25,
+    randomRise: 20,
+    baseSize: 1.8,
+    growMax: 4.5,
+    fadeRate: 1.0,
+    wobbleAmp: 8,
+    wobbleFreq: 0.8,
+    nozzleWidthRatio: 0.5,
+    eccMin: 0.7,
+    eccMax: 1.0,
+    fanSpread: 0.35
+  };
+
+  class Bubble{
+    constructor(t){ this.reset(t) }
+    reset(t){
+      const nozzleW = W * CFG.nozzleWidthRatio;
+      this.x0 = W/2 + (Math.random()-0.5)*nozzleW;
+      this.y = H + 8;
+      this.vy = -(CFG.baseRise + Math.random()*CFG.randomRise);
+      this.birth = t;
+      this.xDrift = (Math.random()*2-1);
+      this.wSeed = Math.random()*1000;
+      this.baseR = CFG.baseSize + Math.random()*1.2;
+      this.maxA = 0.9;
+      this.ecc = CFG.eccMin + Math.random()*(CFG.eccMax-CFG.eccMin);
+    }
+    update(dt, t){
+      this.y += this.vy * dt;
+      const k = 1 - (this.y / H);
+      this.r = this.baseR * (1 + (CFG.growMax/CFG.baseSize - 1) * Math.min(1, k));
+      this.alpha = Math.max(0, this.maxA * (1 - k*CFG.fadeRate));
+      const fan = (this.y < H) ? (H - this.y) / H : 0;
+      const spread = (this.xDrift * CFG.fanSpread * fan * W);
+      const wobble = Math.sin(this.wSeed + t * CFG.wobbleFreq) * CFG.wobbleAmp * k;
+      this.x = this.x0 + spread + wobble;
+      if (this.y + this.r < -12 || this.alpha <= 0.02) this.reset(t);
+    }
+    draw(){
+      ctx.globalAlpha = this.alpha;
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.scale(1, this.ecc);
+      ctx.beginPath();
+      ctx.arc(0,0,this.r,0,Math.PI*2);
+      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bubble');
+      ctx.fill();
+      ctx.restore();
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  let bubbles=[]; let spawnCarry=0;
+
+  function resize(){
+    const r = canvas.getBoundingClientRect();
+    W = Math.max(100, Math.floor(r.width * dpr));
+    H = Math.max(100, Math.floor(r.height * dpr));
+    canvas.width = W; canvas.height = H;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  addEventListener('resize', resize, {passive:true});
+  resize();
+
+  const t0 = performance.now()/1000;
+  for(let i=0;i<40;i++){ const b=new Bubble(t0); b.y = H - (H*i/40)*0.98; b.alpha=Math.random()*0.6; bubbles.push(b); }
+
+  let prev = performance.now()/1000;
+  function loop(){
+    const now = performance.now()/1000; let dt = Math.min(0.033, now-prev); prev = now;
+    spawnCarry += CFG.spawnPerSec * dt; while(spawnCarry>=1){ bubbles.push(new Bubble(now)); spawnCarry-=1; }
+    if (bubbles.length>120) bubbles.splice(0, bubbles.length-120);
+
+    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bubble-area');
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    bubbles.sort((a,b)=>a.r-b.r);
+    for(const b of bubbles){ b.update(dt, now); b.draw(ctx); }
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+</script>
+</body>
+</html>

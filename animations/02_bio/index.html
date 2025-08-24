@@ -20,6 +20,14 @@
                     <br>好気槽では、米のとぎ汁などの有機物をきれいにします。
                     <br>嫌気槽や無酸素槽では、富栄養化の原因となる窒素やリンを除去する働きをします。
                 </p>
+                <div class="caption-microbes">
+                    <img src="../../material/microbe/kumamushi.png">
+                    <img src="../../material/microbe/mizinko.png">
+                    <img src="../../material/microbe/alsera.png">
+                    <img src="../../material/microbe/boruke.png">
+                    <img src="../../material/microbe/alsera_side.png">
+                </div>
+                <p style="margin-top:50px">▲微生物たち</p>
             </div>
         </div>
         
@@ -27,7 +35,70 @@
             <div class="animation-area">
                 <div class="animation-container-wrapper">
                     <!-- ベース画像 -->
-                    <!-- <img src="../../material/02_base.svg" alt="生物反応槽ベース" class="base-image"> -->
+                    <img src="../../material/02_base.svg" alt="生物反応槽ベース" class="base-image">
+                    
+                    <!-- アニメーションレイヤー群 -->
+                    <!-- 1. 気泡アニメーション -->
+                    <div class="bubble-animation-layer">
+                        <div class="bubble-tank" id="diffuser-1">
+                            <canvas id="bubble-canvas-1"></canvas>
+                        </div>
+                        <div class="bubble-tank" id="diffuser-2">
+                            <canvas id="bubble-canvas-2"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- 2. 微生物アニメーション -->
+                    <div class="microbe-animation-layer">
+                        <div id="microbe-area">
+                            <img src="../../material/microbe/alsera.png" class="microbe floating" id="microbe-1" alt="微生物">
+                            <img src="../../material/microbe/alsera_side.png" class="microbe floating" id="microbe-2" alt="微生物">
+                            <img src="../../material/microbe/boruke.png" class="microbe floating" id="microbe-3" alt="微生物">
+                            <img src="../../material/microbe/kumamushi.png" class="microbe floating" id="microbe-4" alt="微生物">
+                            <img src="../../material/microbe/mizinko.png" class="microbe floating" id="microbe-5" alt="微生物">
+                        </div>
+                    </div>
+                    
+                    <!-- 3. 渦アニメーション -->
+                    <div class="vortex-animation-layer">
+                        <svg class="vortex-container" id="vortex-anaerobic" viewBox="0 0 200 450">
+                            <defs>
+                                <clipPath id="anaerobic-clip">
+                                    <rect x="20" y="20" width="160" height="410" rx="10"/>
+                                </clipPath>
+                            </defs>
+                            <g clip-path="url(#anaerobic-clip)">
+                                <path class="vortex-path" id="vortex-path-1" />
+                            </g>
+                        </svg>
+                        
+                        <svg class="vortex-container" id="vortex-anoxic" viewBox="0 0 200 450">
+                            <defs>
+                                <clipPath id="anoxic-clip">
+                                    <rect x="20" y="20" width="160" height="410" rx="10"/>
+                                </clipPath>
+                            </defs>
+                            <g clip-path="url(#anoxic-clip)">
+                                <path class="vortex-path" id="vortex-path-2" />
+                            </g>
+                        </svg>
+                    </div>
+                    
+                    <!-- 説明用レイヤー -->
+                    <div class="explanation-layer">
+                        <!-- 吹き出し -->
+                        <div class="explanation-bubble" id="bubble-aerobic">好気槽</div>
+                        <div class="explanation-bubble" id="bubble-anaerobic">無酸素槽</div>
+                        <div class="explanation-bubble" id="bubble-anaerobic-strict">嫌気槽</div>
+                        <div class="explanation-bubble bubble--bottom" id="bubble-from-final">最終沈殿池から</div>
+                        <div class="explanation-bubble bubble--bottom" id="bubble-from-first">最初沈殿池から</div>
+                        <div class="explanation-bubble bubble--top-long" id="bubble-mixer">水中撹拌機</div>
+                        <div class="explanation-bubble bubble--top-long" id="bubble-diffuser">散気装置</div>
+                        <div class="explanation-bubble bubble--bottom" id="bubble-to-final">最終沈殿池へ</div>
+                        
+                        <!-- 矢印 -->
+                        <img src="../../material/allow_left.svg" class="arrow" id="arrow-1" alt="左矢印">
+                    </div>
                 </div>
             </div>
         </div>

@@ -24,13 +24,54 @@ html, body {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
+/* 横レイアウト用のアニメーションコンテナ */
 .animation-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  min-height: 100vh;
   height: 100vh;
   width: 100vw;
+  margin: 0;
+  padding: 0;
 }
 
+/* 左セクション */
+.left-section {
+  width: 400px;
+  background: #f8f9fa;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* 右セクション */
+.right-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  min-height: 100vh;
+}
+
+/* 左セクション内のタイトルエリア */
+.left-section .title-area {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 30px 40px;
+  border-radius: 0;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 縦レイアウト用のタイトルエリア（デフォルト） */
 .title-area {
   flex-shrink: 0;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -63,6 +104,34 @@ html, body {
   z-index: 1;
 }
 
+/* 右セクション内のアニメーションエリア */
+.right-section .animation-area {
+  flex: none;
+  min-height: auto;
+  padding: 0;
+  background: transparent;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.animation-container-wrapper {
+  position: relative;
+  width: 1000px;
+  height: 750px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.base-image {
+  width: 1000px;
+  height: auto;
+  display: block;
+}
+
+/* 縦レイアウト用のアニメーションエリア（デフォルト） */
 .animation-area {
   flex: 1;
   min-height: 0;
@@ -84,6 +153,23 @@ html, body {
   background: white;
 }
 
+/* 左セクション内のキャプションエリア */
+.left-section .caption-area {
+  background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+  padding: 40px;
+  border-radius: 0;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+}
+
+.left-section .caption {
+  font-size: clamp(12px, 1.5vw, 18px);
+}
+
+/* 縦レイアウト用のキャプションエリア（デフォルト） */
 .caption-area {
   flex-shrink: 0;
   background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
@@ -101,52 +187,115 @@ html, body {
   text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
-.bubble {
-  position: absolute;
-  background: white;
-  border: 2px solid var(--text-color);
-  border-radius: 20px;
-  padding: 10px 15px;
-  font-size: clamp(12px, 1.5vw, 20px);
-  z-index: 5;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+/* 新しい吹き出しスタイル */
+.explanation-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
 }
 
-.bubble::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 0;
-  border: 10px solid transparent;
+.explanation-bubble {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #333;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 5;
 }
 
+/* 下向き尻尾 */
 .bubble--bottom::after {
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-top-color: white;
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top: 10px solid #333;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.bubble--top::after {
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-bottom-color: white;
+.bubble--bottom::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-top: 8px solid rgba(255, 255, 255, 0.95);
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
 }
 
+/* 左向き尻尾 */
 .bubble--left::after {
-  right: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  border-right-color: white;
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right: 10px solid #333;
+    top: 50%;
+    left: -19px;
+    transform: translateY(-50%);
 }
 
-.bubble--right::after {
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  border-left-color: white;
+.bubble--left::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-right: 8px solid rgba(255, 255, 255, 0.95);
+    top: 50%;
+    left: -14px;
+    transform: translateY(-50%);
+    z-index: 1;
 }
+
+/* 上向き尻尾（長め） */
+.bubble--top-long::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+    border-bottom: 63px solid #333;
+    top: -79px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bubble--top-long::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 13px solid transparent;
+    border-bottom: 63px solid rgba(255, 255, 255, 0.95);
+    top: -76px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.arrow {
+    position: absolute;
+    width: auto;
+    object-fit: contain;
+}
+
 
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
