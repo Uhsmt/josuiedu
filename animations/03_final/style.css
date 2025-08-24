@@ -1,1 +1,94 @@
 /* 最終沈殿池専用スタイル */
+
+.scraper-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1000px;
+    height: 750px;
+    pointer-events: none;
+}
+
+.suisui-container {
+    position: absolute;
+    top: 100px;
+    left: 50px;
+    width: 260px;
+    height: 320px;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.suisui-fish {
+    position: absolute;
+    z-index: 10;
+    width: 40px !important;
+    height: 40px !important;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+}
+
+.explanation-layer {
+    width: 1000px;
+    height: 750px;
+}
+
+/* 各吹き出しの初期位置（調整用） */
+#bubble-1 { top: 0px; left: -3px; }
+#bubble-2 { top: 0px; left: 380px; }
+#bubble-3 { top: 100px; left: 1030px; }
+#bubble-4 { top: 615px; left: 975px; }
+#bubble-5 { top: 700px; left: 860px; }
+#bubble-6 { top: 470px; left: 150px; }
+
+
+#arrow-1{
+    top: 50px;
+    left: 423px;
+    height: 40px;
+}
+
+#arrow-2{
+    top: 50px;
+    left: 40px;
+    height: 40px;   
+}
+
+#arrow-3{
+    top: 76px;
+    left: 900px;
+    height: 30px;
+}
+#arrow-4{
+    top: 106px;
+    left: 900px;
+    height: 30px;
+}
+#arrow-5{
+    top: 136px;
+    left: 900px;
+    height: 30px;
+}
+
+
+/* scraper-trackのスタイルは動的に生成される */
+
+/* 共有境界線を隠す */
+.track-main {
+    border-left: none; /* メイン長方形の左辺を完全に消す */
+}
+
+.track-extension {
+    border-right: none; /* 突出部分の右辺（共有部分）を消す */
+}
+
+/* border-partialのスタイルは動的に生成される */
+
+/* ブレードのスタイルは動的に生成される */
+
+/* 動作軽減設定対応 */
+@media (prefers-reduced-motion: reduce) {
+    .scraper-container {
+        display: none;
+    }
+}

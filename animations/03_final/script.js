@@ -1,89 +1,86 @@
-// 最終沈殿池アニメーション制御
-class FinalSedimentationAnimation {
-    constructor() {
-        this.animationId = null;
-        this.isPaused = false;
-        
-        this.init();
-        this.setupControls();
-    }
+// スイスイくんアニメーション
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('suisuiContainer');
     
-    init() {
-        console.log('最終沈殿池アニメーション開始');
-        
-        // レスポンシブ対応
-        this.handleResize();
-        window.addEventListener('resize', () => this.handleResize());
-        
-        // フルスクリーン対応
-        this.setupFullscreen();
-    }
+    // 魚の種類と数
+    const fishTypes = [
+        { name: 'suisui1', count: 2 },
+        { name: 'suisui2', count: 2 }
+    ];
     
-    handleResize() {
-        console.log('レイアウト自動調整完了');
-    }
-    
-    setupFullscreen() {
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'f' || event.key === 'F') {
-                this.toggleFullscreen();
-            }
-            if (event.key === 'Escape') {
-                this.exitFullscreen();
-            }
-        });
-        
-        // ダブルクリックでフルスクリーン
-        document.addEventListener('dblclick', () => {
-            this.toggleFullscreen();
-        });
-    }
-    
-    toggleFullscreen() {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(err => {
-                console.log('フルスクリーンエラー:', err);
-            });
-        } else {
-            document.exitFullscreen();
+    // 各魚を生成
+    fishTypes.forEach(fish => {
+        for (let i = 0; i < fish.count; i++) {
+            createFish(container, fish.name, i);
         }
-    }
-    
-    exitFullscreen() {
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        }
-    }
-    
-    setupControls() {
-        // スペースキーでアニメーション一時停止/再開
-        document.addEventListener('keydown', (event) => {
-            if (event.key === ' ') {
-                event.preventDefault();
-                this.toggleAnimation();
-            }
-        });
-    }
-    
-    toggleAnimation() {
-        if (this.isPaused) {
-            this.isPaused = false;
-            console.log('アニメーション再開');
-        } else {
-            this.isPaused = true;
-            console.log('アニメーション一時停止');
-        }
-    }
-}
-
-// DOM読み込み完了後にアニメーション開始
-document.addEventListener('DOMContentLoaded', () => {
-    new FinalSedimentationAnimation();
+    });
 });
 
-// パフォーマンス監視
-if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => {
-        console.log('アニメーション最適化完了');
+function createFish(container, fishType, index) {
+    const fishImg = document.createElement('img');
+    fishImg.src = `../../material/${fishType}.png`;
+    fishImg.alt = fishType;
+    fishImg.classList.add('suisui-fish', `${fishType}-${index}`);
+    fishImg.id = `fish-${fishType}-${index}`;
+    
+    fishImg.style.position = 'absolute';
+    fishImg.style.width = '40px';
+    fishImg.style.height = '40px';
+    fishImg.style.transformOrigin = 'center center';
+    
+    // 1体ずつ交互に反転させる
+    if (index % 2 === 1) {
+        fishImg.style.transform = 'scaleX(-1)';
+    }
+    
+    // ランダムな泳ぎパターンを設定
+    const swimDuration = 12 + Math.random() * 8; // 12-20秒
+    const startDelay = Math.random() * 5; // 0-5秒の遅延
+    
+    fishImg.style.animationName = `swimFish-${fishType}-${index}`;
+    fishImg.style.animationDuration = `${swimDuration}s`;
+    fishImg.style.animationDelay = `${startDelay}s`;
+    fishImg.style.animationIterationCount = 'infinite';
+    fishImg.style.animationTimingFunction = 'linear';
+    
+    container.appendChild(fishImg);
+    
+    // CSS keyframes を動的に生成
+    createSwimKeyframes(fishType, index, container.offsetWidth, container.offsetHeight);
+}
+
+function createSwimKeyframes(fishType, index, containerWidth, containerHeight) {
+    const keyframeName = `swimFish-${fishType}-${index}`;
+    
+    // フラフラと泳ぐ経路を生成（コンテナ全域を活用）
+    const points = [];
+    const margin = 10; // マージンを縮小して全エリア活用
+    
+    // ランダムな8つの点でフラフラした経路を作成
+    for (let i = 0; i < 8; i++) {
+        const x = margin + Math.random() * (containerWidth - margin * 2 - 40);
+        const y = margin + Math.random() * (containerHeight - margin * 2 - 40);
+        points.push({ x, y });
+    }
+    
+    // 最初の点を最後に追加してループさせる（瞬間移動防止）
+    points.push({ x: points[0].x, y: points[0].y });
+    
+    // keyframes CSS を生成
+    let keyframesCSS = `@keyframes ${keyframeName} {\n`;
+    
+    points.forEach((point, i) => {
+        const percent = Math.round((i * 100) / (points.length - 1));
+        
+        keyframesCSS += `  ${percent}% { 
+          left: ${point.x}px; 
+          top: ${point.y}px; 
+        }\n`;
     });
+    keyframesCSS += '}\n';
+    
+    // スタイルシートに追加
+    const style = document.createElement('style');
+    style.textContent = keyframesCSS;
+    document.head.appendChild(style);
 }

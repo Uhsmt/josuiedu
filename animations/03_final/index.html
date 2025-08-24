@@ -26,13 +26,40 @@
             <div class="animation-area">
                 <div class="animation-container-wrapper">
                     <!-- ベース画像 -->
-                     coming soon...
-                    <!-- <img src="../../material/03_base.svg" alt="最終沈殿池ベース" class="base-image"> -->
+                    <img src="../../material/03_base.svg" alt="最終沈殿池ベース" class="base-image">
+                    
+                    <!-- スイスイくんアニメーション--> 
+                    <div class="suisui-container" id="suisuiContainer">
+                    </div>
+
+                    <!-- スクレーパーアニメーション用コンテナ -->
+                    <div class="scraper-container" id="scraperContainer">
+                        <!-- L字型のトラックとブレード（動的に生成される） -->
+                    </div>
+                    
+                    <!-- 説明用レイヤー -->
+                    <div class="explanation-layer">
+                        <!-- 吹き出し -->
+                        <div class="explanation-bubble bubble--bottom" id="bubble-1">消毒して放流</div>
+                        <div class="explanation-bubble bubble--bottom" id="bubble-2">汚泥処理施設へ</div>
+                        <div class="explanation-bubble bubble--left" id="bubble-3">生物反応槽から</div>
+                        <div class="explanation-bubble bubble--left" id="bubble-4">生物反応槽へ<br>(返送汚泥)</div>
+                        <div class="explanation-bubble bubble--left" id="bubble-5">汚泥処理施設へ</div>
+                        <div class="explanation-bubble bubble--top-long" id="bubble-6">汚泥かき寄せ機</div>
+                        
+                        <!-- 矢印 -->
+                        <img src="../../material/allow_top.svg" class="arrow" id="arrow-1" alt="上矢印">
+                        <img src="../../material/allow_top.svg" class="arrow" id="arrow-2" alt="上矢印">
+                        <img src="../../material/allow_left_long.svg" class="arrow" id="arrow-3" alt="左矢印長">
+                        <img src="../../material/allow_left_long.svg" class="arrow" id="arrow-4" alt="左矢印長">
+                        <img src="../../material/allow_left_long.svg" class="arrow" id="arrow-5" alt="左矢印長">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
     <script src="script.js"></script>
+    <script src="../shared/scraper.js"></script>
 </body>
 </html>
