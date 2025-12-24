@@ -52,7 +52,15 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
+    <script>
+        window.scraperConfig = { reverse: true };
+    </script>
     <script src="../shared/scraper.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            new ShochinAnimation(window.scraperConfig);
+        });
+    </script>
 </body>
 </html>

@@ -1,10 +1,11 @@
 // 最初沈殿池アニメーション制御
 class ShochinAnimation {
-    constructor() {
+    constructor(options = {}) {
         this.animationId = null;
         this.blades = [];
         this.isPaused = false;
-        
+        this.reverseDirection = options.reverse || false;
+
         this.init();
         this.setupControls();
         this.initScraper();
@@ -122,31 +123,31 @@ class ShochinAnimation {
             width: baseImage.offsetWidth,
             height: baseImage.offsetHeight
         };
-        
+
         const scaleX = currentImageSize.width / BASE_IMAGE_SIZE.width;
         const scaleY = currentImageSize.height / BASE_IMAGE_SIZE.height;
-        
+
         // === スケールを適用した設定 ===
         this.CONFIG = {
             borderWidth: Math.round(BASE_CONFIG.borderWidth * scaleX),
             bladeSize: Math.round(BASE_CONFIG.bladeSize * scaleX),
             bladeSpacing: Math.round(BASE_CONFIG.bladeSpacing * scaleX),
             speed: BASE_CONFIG.speed,
-            
+
             main: {
                 top: Math.round(BASE_CONFIG.main.top * scaleY),
                 left: Math.round(BASE_CONFIG.main.left * scaleX),
                 width: Math.round(BASE_CONFIG.main.width * scaleX),
                 height: Math.round(BASE_CONFIG.main.height * scaleY)
             },
-            
+
             extension: {
                 top: Math.round(BASE_CONFIG.extension.top * scaleY),
                 left: Math.round(BASE_CONFIG.extension.left * scaleX),
                 width: Math.round(BASE_CONFIG.extension.width * scaleX),
                 height: Math.round(BASE_CONFIG.extension.height * scaleY)
             },
-            
+
             borderPartial: {
                 top: Math.round(BASE_CONFIG.borderPartial.top * scaleY),
                 left: Math.round(BASE_CONFIG.borderPartial.left * scaleX),
@@ -203,91 +204,186 @@ class ShochinAnimation {
         const style = document.createElement('style');
         const size = this.CONFIG.bladeSize;
         const thickness = Math.floor(size / 3);
-        style.textContent = `
-            .scraper-blade {
-                position: absolute;
-                width: ${size}px;
-                height: ${size}px;
-                transition: none;
-                z-index: 3;
-            }
-            
-            .blade-top::before {
-                content: '';
-                position: absolute;
-                width: ${thickness}px;
-                height: ${size}px;
-                background: black;
-                right: 0;
-                top: 0;
-            }
-            .blade-top::after {
-                content: '';
-                position: absolute;
-                width: ${size}px;
-                height: ${thickness}px;
-                background: black;
-                left: 0;
-                bottom: 0;
-            }
-            
-            .blade-right::before {
-                content: '';
-                position: absolute;
-                width: ${thickness}px;
-                height: ${size}px;
-                background: black;
-                left: 0;
-                top: 0;
-            }
-            .blade-right::after {
-                content: '';
-                position: absolute;
-                width: ${size}px;
-                height: ${thickness}px;
-                background: black;
-                left: 0;
-                bottom: 0;
-            }
-            
-            .blade-bottom::before {
-                content: '';
-                position: absolute;
-                width: ${thickness}px;
-                height: ${size}px;
-                background: black;
-                left: 0;
-                top: 0;
-            }
-            .blade-bottom::after {
-                content: '';
-                position: absolute;
-                width: ${size}px;
-                height: ${thickness}px;
-                background: black;
-                left: 0;
-                top: 0;
-            }
-            
-            .blade-left::before {
-                content: '';
-                position: absolute;
-                width: ${thickness}px;
-                height: ${size}px;
-                background: black;
-                right: 0;
-                top: 0;
-            }
-            .blade-left::after {
-                content: '';
-                position: absolute;
-                width: ${size}px;
-                height: ${thickness}px;
-                background: black;
-                left: 0;
-                top: 0;
-            }
-        `;
+
+        if (this.reverseDirection) {
+            // 逆回転時の形状：
+            // 上辺（左に進む）：Lの形 = 縦棒左、横棒下
+            // 左辺（下に進む）：」の形 = 縦棒右、横棒下
+            // 下辺（右に進む）：「の形 = 縦棒左、横棒上
+            // 右辺（上に進む）：「の形 = 縦棒左、横棒上
+            style.textContent = `
+                .scraper-blade {
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    transition: none;
+                    z-index: 3;
+                }
+
+                .blade-top::before {
+                    content: '';
+                    position: absolute;
+                    width: ${thickness}px;
+                    height: ${size}px;
+                    background: black;
+                    left: 0;
+                    top: 0;
+                }
+                .blade-top::after {
+                    content: '';
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${thickness}px;
+                    background: black;
+                    left: 0;
+                    bottom: 0;
+                }
+
+                .blade-left::before {
+                    content: '';
+                    position: absolute;
+                    width: ${thickness}px;
+                    height: ${size}px;
+                    background: black;
+                    right: 0;
+                    top: 0;
+                }
+                .blade-left::after {
+                    content: '';
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${thickness}px;
+                    background: black;
+                    left: 0;
+                    bottom: 0;
+                }
+
+                .blade-bottom::before {
+                    content: '';
+                    position: absolute;
+                    width: ${thickness}px;
+                    height: ${size}px;
+                    background: black;
+                    left: 0;
+                    top: 0;
+                }
+                .blade-bottom::after {
+                    content: '';
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${thickness}px;
+                    background: black;
+                    left: 0;
+                    top: 0;
+                }
+
+                .blade-right::before {
+                    content: '';
+                    position: absolute;
+                    width: ${thickness}px;
+                    height: ${size}px;
+                    background: black;
+                    left: 0;
+                    top: 0;
+                }
+                .blade-right::after {
+                    content: '';
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${thickness}px;
+                    background: black;
+                    left: 0;
+                    top: 0;
+                }
+            `;
+        } else {
+            // 通常：L字の縦棒を右側に
+            style.textContent = `
+                .scraper-blade {
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    transition: none;
+                    z-index: 3;
+                }
+
+                .blade-top::before {
+                    content: '';
+                    position: absolute;
+                    width: ${thickness}px;
+                    height: ${size}px;
+                    background: black;
+                    right: 0;
+                    top: 0;
+                }
+                .blade-top::after {
+                    content: '';
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${thickness}px;
+                    background: black;
+                    left: 0;
+                    bottom: 0;
+                }
+
+                .blade-right::before {
+                    content: '';
+                    position: absolute;
+                    width: ${thickness}px;
+                    height: ${size}px;
+                    background: black;
+                    left: 0;
+                    top: 0;
+                }
+                .blade-right::after {
+                    content: '';
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${thickness}px;
+                    background: black;
+                    left: 0;
+                    bottom: 0;
+                }
+
+                .blade-bottom::before {
+                    content: '';
+                    position: absolute;
+                    width: ${thickness}px;
+                    height: ${size}px;
+                    background: black;
+                    left: 0;
+                    top: 0;
+                }
+                .blade-bottom::after {
+                    content: '';
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${thickness}px;
+                    background: black;
+                    left: 0;
+                    top: 0;
+                }
+
+                .blade-left::before {
+                    content: '';
+                    position: absolute;
+                    width: ${thickness}px;
+                    height: ${size}px;
+                    background: black;
+                    right: 0;
+                    top: 0;
+                }
+                .blade-left::after {
+                    content: '';
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${thickness}px;
+                    background: black;
+                    left: 0;
+                    top: 0;
+                }
+            `;
+        }
         document.head.appendChild(style);
     }
     
@@ -301,15 +397,15 @@ class ShochinAnimation {
                 box-sizing: border-box;
                 z-index: 4;
             }
-            
+
             .track-main {
                 border-left: none !important;
             }
-            
+
             .track-extension {
                 border-right: none !important;
             }
-            
+
             .border-partial {
                 position: absolute;
                 border-left: ${this.CONFIG.borderWidth}px solid black;
@@ -359,7 +455,7 @@ class ShochinAnimation {
         const container = document.getElementById('scraperContainer');
         const axleSize = this.CONFIG.borderWidth * 3;
         const offset = axleSize / 2;
-        
+
         // L字型軌道の5つの角の座標（内側に配置 + 微調整）
         const adjustment = 8; // 微調整のピクセル数
         const axlePositions = [
@@ -394,7 +490,7 @@ class ShochinAnimation {
                 y: this.track.extension.top - this.CONFIG.borderWidth - offset
             }
         ];
-        
+
         axlePositions.forEach((pos, index) => {
             const axle = document.createElement('div');
             axle.className = 'scraper-axle';
@@ -435,7 +531,7 @@ class ShochinAnimation {
         const normalizedPos = position % this.perimeter;
         let cumulativeLength = 0;
         let x, y, direction;
-        
+
         // 1. メイン長方形の上辺
         const seg1 = this.track.main.width;
         if (normalizedPos < cumulativeLength + seg1) {
@@ -446,7 +542,7 @@ class ShochinAnimation {
             return { x, y, direction };
         }
         cumulativeLength += seg1;
-        
+
         // 2. メイン長方形の右辺
         const seg2 = this.track.main.height;
         if (normalizedPos < cumulativeLength + seg2) {
@@ -457,7 +553,7 @@ class ShochinAnimation {
             return { x, y, direction };
         }
         cumulativeLength += seg2;
-        
+
         // 3. メイン長方形の下辺
         const seg3 = this.track.main.width;
         if (normalizedPos < cumulativeLength + seg3) {
@@ -468,7 +564,7 @@ class ShochinAnimation {
             return { x, y, direction };
         }
         cumulativeLength += seg3;
-        
+
         // 4. 突出部分の下辺
         const seg4 = this.track.extension.width;
         if (normalizedPos < cumulativeLength + seg4) {
@@ -479,7 +575,7 @@ class ShochinAnimation {
             return { x, y, direction };
         }
         cumulativeLength += seg4;
-        
+
         // 5. 突出部分の左辺
         const seg5 = this.track.extension.height;
         if (normalizedPos < cumulativeLength + seg5) {
@@ -490,7 +586,7 @@ class ShochinAnimation {
             return { x, y, direction };
         }
         cumulativeLength += seg5;
-        
+
         // 6. 突出部分の上辺
         const seg6 = this.track.extension.width - (this.CONFIG.bladeSize/2 + this.CONFIG.borderWidth);
         if (normalizedPos < cumulativeLength + seg6) {
@@ -501,26 +597,30 @@ class ShochinAnimation {
             return { x, y, direction };
         }
         cumulativeLength += seg6;
-        
+
         // 7. メイン長方形の左辺上部
         const seg7 = this.track.extension.top - this.track.main.top;
         const localPos = normalizedPos - cumulativeLength;
         x = this.track.main.left - this.CONFIG.bladeSize;
         y = this.track.extension.top - localPos - this.CONFIG.bladeSize/2;
         direction = 'left';
-        
+
         return { x, y, direction };
     }
     
     updateBlades() {
         this.blades.forEach(blade => {
             const transform = this.getBladeTransform(blade.position);
-            
+
             blade.element.style.left = transform.x + 'px';
             blade.element.style.top = transform.y + 'px';
             blade.element.className = `scraper-blade blade-${transform.direction}`;
-            
-            blade.position = (blade.position + this.CONFIG.speed) % this.perimeter;
+
+            if (this.reverseDirection) {
+                blade.position = (blade.position - this.CONFIG.speed + this.perimeter) % this.perimeter;
+            } else {
+                blade.position = (blade.position + this.CONFIG.speed) % this.perimeter;
+            }
         });
     }
     
@@ -546,9 +646,12 @@ class ShochinAnimation {
 }
 
 // DOM読み込み完了後にアニメーション開始
-document.addEventListener('DOMContentLoaded', () => {
-    new ShochinAnimation();
-});
+// デフォルトの初期化（HTMLから上書き可能）
+if (typeof window.scraperConfig === 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+        new ShochinAnimation();
+    });
+}
 
 // パフォーマンス監視
 if ('requestIdleCallback' in window) {
