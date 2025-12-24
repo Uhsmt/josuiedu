@@ -299,29 +299,31 @@ html, body {
 
 /* 戻るボタン */
 .back-button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
-  border-radius: 8px;
-  font-size: clamp(14px, 1.5vw, 18px);
-  font-weight: 600;
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 400;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
   text-align: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
 }
 
 .back-button:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.8);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.7);
+  color: rgba(255, 255, 255, 1);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .back-button:active {
-  transform: translateY(0);
+  transform: scale(0.98);
 }
 
 /* レスポンシブ対応 */
@@ -342,7 +344,9 @@ html, body {
   }
 
   .back-button {
-    padding: 10px 20px;
-    font-size: 14px;
+    bottom: 10px;
+    left: 10px;
+    padding: 6px 12px;
+    font-size: 12px;
   }
 }

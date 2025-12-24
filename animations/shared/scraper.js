@@ -209,7 +209,7 @@ class ShochinAnimation {
             // 逆回転時の形状：
             // 上辺（左に進む）：Lの形 = 縦棒左、横棒下
             // 左辺（下に進む）：」の形 = 縦棒右、横棒下
-            // 下辺（右に進む）：「の形 = 縦棒左、横棒上
+            // 下辺（右に進む）：」の形（左右反転） = 縦棒右、横棒上
             // 右辺（上に進む）：「の形 = 縦棒左、横棒上
             style.textContent = `
                 .scraper-blade {
@@ -264,7 +264,7 @@ class ShochinAnimation {
                     width: ${thickness}px;
                     height: ${size}px;
                     background: black;
-                    left: 0;
+                    right: 0;
                     top: 0;
                 }
                 .blade-bottom::after {
