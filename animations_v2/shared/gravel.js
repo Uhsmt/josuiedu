@@ -77,7 +77,10 @@ class GravelAnimation {
         const containerHeight = area.container.offsetHeight;
         const containerWidth = area.container.offsetWidth;
 
-        for (let i = 0; i < this.config.initialTravelParticles; i++) {
+        // area2は半分に減らす
+        const count = area.id === 'gravel-area-2' ? this.config.initialTravelParticles / 2 : this.config.initialTravelParticles;
+
+        for (let i = 0; i < count; i++) {
             const particle = document.createElement('div');
             particle.className = 'gravel-particle';
 
@@ -198,8 +201,8 @@ class GravelAnimation {
         const containerHeight = area.container.offsetHeight;
         const containerWidth = area.container.offsetWidth;
 
-        // area4は元の数、それ以外は少なめ
-        const count = area.id === 'gravel-area-4' ? this.config.initialParticles4 : this.config.initialParticles;
+        // area4専用の初期パーティクル生成
+        const count = this.config.initialParticles4;
 
         for (let i = 0; i < count; i++) {
             const particle = document.createElement('div');
@@ -228,15 +231,22 @@ class GravelAnimation {
             `;
 
             // エリア全体にランダム配置（中心座標として生成、境界から半径分の余白を確保）
-            const x = radius + Math.random() * (containerWidth - radius * 2);
-            const y = radius + Math.random() * (containerHeight - radius * 2);
+            // area4は右半分から発生
+            let x, y;
+            if (area.direction === 'down') {  // area4
+                x = containerWidth / 2 + Math.random() * (containerWidth / 2 - radius);
+                y = radius + Math.random() * (containerHeight - radius * 2);
+            } else {
+                x = radius + Math.random() * (containerWidth - radius * 2);
+                y = radius + Math.random() * (containerHeight - radius * 2);
+            }
 
             // 方向に応じた速度を設定
             let speedX = 0, speedY = 0;
             switch(area.direction) {
-                case 'down':  // area4: 上から下（元の落下速度）
+                case 'down':  // area4: 上から下、右半分から発生して左下に広がる
                     speedY = this.config.fallSpeed + (Math.random() - 0.5) * this.config.speedVariation * 2;
-                    speedX = (Math.random() - 0.5) * 0.1;  // わずかな横揺れ
+                    speedX = -(Math.random() * 0.5);  // 左方向への速度（0～-0.5）
                     break;
                 case 'right':  // area3: 左から右
                     speedX = this.config.scraperSpeed + (Math.random() - 0.5) * this.config.speedVariation;
@@ -305,11 +315,11 @@ class GravelAnimation {
         const containerHeight = area.container.offsetHeight;
 
         switch(area.direction) {
-            case 'down':  // area4: 上から下（元の落下速度）
-                x = radius + Math.random() * (containerWidth - radius * 2);
+            case 'down':  // area4: 上から下、右半分から発生して左下に広がる
+                x = containerWidth / 2 + Math.random() * (containerWidth / 2 - radius);  // 右半分から
                 y = radius;
                 speedY = this.config.fallSpeed + (Math.random() - 0.5) * this.config.speedVariation * 2;
-                speedX = (Math.random() - 0.5) * 0.1;  // わずかな横揺れ
+                speedX = -(Math.random() * 0.5);  // 左方向への速度（0～-0.5）
                 break;
             case 'right':  // area3: 左から右
                 x = radius;
@@ -412,14 +422,14 @@ class GravelAnimation {
             particle.x += particle.speedX;
             particle.y += particle.speedY;
 
-            // エリアの境界チェック（半径分内側でチェック）
+            // エリアの境界チェック（円の端が境界に達したときに遷移）
             const radius = particle.radius || this.config.particleSize / 2;
             let needsTransition = false;
-            if (area.direction === 'right' && particle.x >= containerWidth - radius) {
+            if (area.direction === 'right' && particle.x + radius >= containerWidth) {
                 needsTransition = true;
-            } else if (area.direction === 'up' && particle.y <= radius) {
+            } else if (area.direction === 'up' && particle.y - radius <= 0) {
                 needsTransition = true;
-            } else if (area.direction === 'left' && particle.x <= radius) {
+            } else if (area.direction === 'left' && particle.x - radius <= 0) {
                 needsTransition = true;
             }
 
@@ -428,6 +438,18 @@ class GravelAnimation {
                 const nextAreaId = this.areaMap[particle.currentArea];
                 if (nextAreaId) {
                     this.transitionToNextArea(particle, nextAreaId);
+                    // 遷移後、新しいエリアのサイズを取得して位置を反映
+                    const newArea = this.areas.find(a => a.id === particle.currentArea);
+                    if (newArea && newArea.container) {
+                        const newContainerWidth = newArea.container.offsetWidth;
+                        const newContainerHeight = newArea.container.offsetHeight;
+                        // 遷移直後なので揺れは考慮しない
+                        const finalX = Math.max(radius, Math.min(newContainerWidth - radius, particle.x));
+                        const finalY = Math.max(radius, Math.min(newContainerHeight - radius, particle.y));
+                        particle.element.style.left = `${finalX - radius}px`;
+                        particle.element.style.top = `${finalY - radius}px`;
+                    }
+                    return true;
                 } else {
                     // 最後のエリア（area1）を出たら浮上開始
                     this.startFloating(particle);
@@ -495,20 +517,28 @@ class GravelAnimation {
         particle.currentArea = nextAreaId;
 
         // 次のエリアの開始位置と速度を設定
+        const currentContainerWidth = currentArea.container.offsetWidth;
+        const currentContainerHeight = currentArea.container.offsetHeight;
         const containerWidth = nextArea.container.offsetWidth;
         const containerHeight = nextArea.container.offsetHeight;
         const radius = particle.radius || this.config.particleSize / 2;
 
         switch(nextArea.direction) {
-            case 'up':  // area2: 下から上
-                particle.x = radius + Math.random() * (containerWidth - radius * 2);
+            case 'up':  // area2: 下から上（area3から遷移）
+                // area3のy座標をarea2のx座標にマッピング
+                const ratio3to2 = containerWidth / currentContainerHeight;
+                const prevY = particle.y;  // 遷移前のy座標を保存
+                particle.x = Math.max(radius, Math.min(containerWidth - radius, prevY * ratio3to2));
                 particle.y = containerHeight - radius;  // 下端から半径分内側
                 particle.speedX = 0;
                 particle.speedY = -this.config.scraperSpeed;
                 break;
-            case 'left':  // area1: 右から左
+            case 'left':  // area1: 右から左（area2から遷移）
+                // area2のx座標をarea1のy座標にマッピング
+                const ratio2to1 = containerHeight / currentContainerWidth;
+                const prevX = particle.x;  // 遷移前のx座標を保存
                 particle.x = containerWidth - radius;  // 右端から半径分内側
-                particle.y = radius + Math.random() * (containerHeight - radius * 2);
+                particle.y = Math.max(radius, Math.min(containerHeight - radius, prevX * ratio2to1));
                 particle.speedX = -this.config.scraperSpeed;
                 particle.speedY = 0;
                 break;
