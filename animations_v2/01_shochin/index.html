@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浄水システム - 最初沈殿池</title>
+    <link rel="stylesheet" href="../shared/common.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-button">←</a>
+
+    <!-- アニメーションエリア（最上部） -->
+    <div class="animation-section">
+        <div class="animation-area">
+            <div class="animation-container-wrapper">
+                <!-- ベース画像 -->
+                <img src="../../material/01_base_v2.svg" alt="沈殿池ベース" class="base-image">
+
+                <!-- スクレーパーアニメーション用コンテナ -->
+                <div class="scraper-container" id="scraperContainer">
+                    <!-- 台形のトラックとブレード（動的に生成される） -->
+                </div>
+
+                <!-- 説明用レイヤー -->
+                <div class="explanation-layer">
+                    <!-- 吹き出し -->
+                    <div class="explanation-bubble" id="bubble-biological">生物反応そうへ</div>
+                    <div class="explanation-bubble" id="bubble-sludge-treatment1">汚泥処理施設へ</div>
+                    <div class="explanation-bubble" id="bubble-inflow">流入水</div>
+                    <div class="explanation-bubble" id="bubble-sludge-treatment2">汚泥処理施設へ</div>
+
+                    <!-- 矢印 -->
+                    <img src="../../material/allow_left_long.svg" class="arrow" id="arrow-1" alt="左矢印">
+                    <img src="../../material/allow_top.svg" class="arrow" id="arrow-2" alt="上矢印">
+                    <img src="../../material/allow_left_long.svg" class="arrow" id="arrow-3" alt="左矢印">
+                </div>
+
+                <!-- ハイライトエリア（説明文に連動して表示） -->
+                <div class="highlight-layer" id="highlightLayer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 説明エリア（下部固定） -->
+    <div class="description-section">
+        <h1 class="title">最初沈殿池</h1>
+        <div class="caption-area">
+            <p class="caption" id="captionText">
+                汚水をゆっくり流すと、多くのごみは沈みます。浮くごみもあります。
+                <br>これらのごみは、汚泥処理施設に運ばれます。
+            </p>
+        </div>
+    </div>
+
+    <script>
+        window.scraperConfig = { reverse: true };
+    </script>
+    <script src="../shared/scraper.js"></script>
+    <script src="../shared/caption-controller.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            new ShochinAnimation(window.scraperConfig);
+
+            // 説明文のデータ
+            const captions = [
+                {
+                    text: 'これは、最初沈殿池を横から見た様子です。',
+                    highlight: null
+                },
+                {
+                    text: '最初沈殿池の役割は、固形分（汚れのかたまり）を取り除くことです。',
+                    highlight: null
+                },
+                {
+                    text: '汚水は、砂やビニールなどを取り除いた後、入ってきます。',
+                    highlight: null
+                },
+                {
+                    text: '汚水をゆっくり流すと水より重い固形分は、下に沈みます。',
+                    highlight: null
+                },
+                {
+                    text: '沈んだ汚泥は汚泥処理施設に送ります。',
+                    highlight: null
+                },
+                {
+                    text: '効果的に固形分を集めるため、かき寄せ機が回っています。',
+                    highlight: null
+                },
+                {
+                    text: '水に浮くものもあるので、取り除きます。',
+                    highlight: null
+                },
+                {
+                    text: '水に溶け込んだ汚れは反応層へ送られます。',
+                    highlight: null
+                }
+            ];
+
+            // キャプションコントローラーを初期化（8秒ごとに切り替え）
+            new CaptionController(captions, 8000);
+        });
+    </script>
+</body>
+</html>

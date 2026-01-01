@@ -1,0 +1,41 @@
+/* 吹き出しと矢印の位置（1000x750基準） */
+#bubble-1 {
+    top: 17%;
+    left: 0%;
+}
+
+#bubble-2 {
+    top: 2%;
+    left: 45%;
+}
+
+#bubble-3 {
+    top: 17%;
+    left: 97%;
+}
+
+#bubble-4 {
+    top: 70%;
+    left: 102%;
+}
+
+#bubble-5 {
+    top: 83%;
+    left: 68%;
+}
+
+
+#arrow-1 {
+    top: 12%;
+    left: 0%;
+}
+
+#arrow-2 {
+    top: 8%;
+    left: 45%;
+}
+
+#arrow-3 {
+    top: 12%;
+    left: 95%;
+}

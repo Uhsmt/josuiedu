@@ -28,9 +28,9 @@
         
         .nav-links {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 20px;
-            max-width: 600px;
+            max-width: 800px;
             width: 100%;
         }
         
@@ -47,7 +47,10 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        
+        .nav-link.v2{
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        }
+
         .nav-link:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 25px rgba(0,0,0,0.3);
@@ -61,7 +64,8 @@
 <body>
     <div class="nav-container">
         <h1 class="main-title">Animation Demo</h1>
-        
+
+        <h2 style="font-size: clamp(24px, 3vw, 32px); color: #2c3e50; margin-top: 20px;">Version 1</h2>
         <div class="nav-links">
             <a href="animations/01_shochin/index.html" class="nav-link">
                 01. 最初沈殿池
@@ -71,6 +75,19 @@
             </a>
             <a href="animations/03_final/index.html" class="nav-link">
                 03. 最終沈殿池
+            </a>
+        </div>
+
+        <h2 style="font-size: clamp(24px, 3vw, 32px); color: #2c3e50; margin-top: 40px;">Version 2</h2>
+        <div class="nav-links">
+            <a href="animations_v2/01_shochin/index.html" class="nav-link v2">
+                01. 最初沈殿池 (v2)
+            </a>
+            <a href="animations_v2/02_bio/index.html" class="nav-link v2">
+                02. 生物反応槽 (v2)
+            </a>
+            <a href="animations_v2/03_final/index.html" class="nav-link v2">
+                03. 最終沈殿池 (v2)
             </a>
         </div>
     </div>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浄水システム - 生物反応槽</title>
+    <link rel="stylesheet" href="../shared/common.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-button">←</a>
+
+    <!-- アニメーションエリア（最上部） -->
+    <div class="animation-section">
+        <div class="animation-area">
+            <div class="animation-container-wrapper">
+                <!-- ベース画像 -->
+                <img src="../../material/02_base_v2.svg" alt="生物反応槽ベース" class="base-image">
+
+                <!-- アニメーションレイヤー群 -->
+                <!-- 1. 気泡アニメーション -->
+                <div class="bubble-animation-layer">
+                    <div class="bubble-tank" id="diffuser-1">
+                        <canvas id="bubble-canvas-1"></canvas>
+                    </div>
+                    <div class="bubble-tank" id="diffuser-2">
+                        <canvas id="bubble-canvas-2"></canvas>
+                    </div>
+                </div>
+
+                <!-- 2. 微生物アニメーション -->
+                <div class="microbe-animation-layer">
+                    <div id="microbe-area">
+                        <img src="../../material/microbe/alsera.png" class="microbe floating" id="microbe-1" alt="微生物">
+                        <img src="../../material/microbe/alsera_side.png" class="microbe floating" id="microbe-2" alt="微生物">
+                        <img src="../../material/microbe/boruke.png" class="microbe floating" id="microbe-3" alt="微生物">
+                        <img src="../../material/microbe/kumamushi.png" class="microbe floating" id="microbe-4" alt="微生物">
+                        <img src="../../material/microbe/mizinko.png" class="microbe floating" id="microbe-5" alt="微生物">
+                    </div>
+                </div>
+
+                <!-- 3. 渦アニメーション -->
+                <div class="vortex-animation-layer">
+                    <svg class="vortex-container" id="vortex-anaerobic" viewBox="0 0 200 450">
+                        <defs>
+                            <clipPath id="anaerobic-clip">
+                                <rect x="20" y="20" width="160" height="410" rx="10"/>
+                            </clipPath>
+                        </defs>
+                        <g clip-path="url(#anaerobic-clip)">
+                            <path class="vortex-path" id="vortex-path-1" />
+                        </g>
+                    </svg>
+
+                    <svg class="vortex-container" id="vortex-anoxic" viewBox="0 0 200 450">
+                        <defs>
+                            <clipPath id="anoxic-clip">
+                                <rect x="20" y="20" width="160" height="410" rx="10"/>
+                            </clipPath>
+                        </defs>
+                        <g clip-path="url(#anoxic-clip)">
+                            <path class="vortex-path" id="vortex-path-2" />
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- 説明用レイヤー -->
+                <div class="explanation-layer">
+                    <!-- 吹き出し -->
+                    <div class="explanation-bubble" id="bubble-aerobic">好気槽</div>
+                    <div class="explanation-bubble" id="bubble-anaerobic">無酸素槽</div>
+                    <div class="explanation-bubble" id="bubble-anaerobic-strict">嫌気槽</div>
+                    <div class="explanation-bubble bubble--bottom" id="bubble-from-final">最終沈殿池から</div>
+                    <div class="explanation-bubble bubble--bottom" id="bubble-from-first">最初沈殿池から</div>
+                    <div class="explanation-bubble bubble--top-long" id="bubble-mixer">水中撹拌機</div>
+                    <div class="explanation-bubble bubble--top-long" id="bubble-diffuser">散気装置</div>
+                    <div class="explanation-bubble bubble--bottom" id="bubble-to-final">最終沈殿池へ</div>
+
+                    <!-- 矢印 -->
+                    <img src="../../material/allow_left.svg" class="arrow" id="arrow-1" alt="左矢印">
+                </div>
+
+                <!-- ハイライトエリア（説明文に連動して表示） -->
+                <div class="highlight-layer" id="highlightLayer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 説明エリア（下部固定） -->
+    <div class="description-section">
+        <h1 class="title">生物反応槽</h1>
+        <div class="caption-area">
+            <p class="caption" id="captionText">
+                汚水は、微生物たちの働きにより、きれいになります。この微生物たちを活性汚泥と呼んでいます。
+            </p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="../shared/caption-controller.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 説明文のデータ
+            const captions = [
+                {
+                    text: 'これは、反応槽を横から見た様子です。',
+                    highlight: null
+                },
+                {
+                    text: '微生物の中には、汚れを食べてくれるものがいます。',
+                    highlight: null
+                },
+                {
+                    text: 'この微生物の働きを利用して、水をきれいにします。',
+                    highlight: null
+                },
+                {
+                    text: '微生物が活動できるよう、空気を送ったり、水を回しています。',
+                    highlight: null
+                },
+                {
+                    text: 'この施設（反応槽）は、窒素やリンを取り除く仕組みを持っています。',
+                    highlight: null
+                },
+                {
+                    text: '博多湾で赤潮などが発生しないよう、窒素やリンを取り除いています。',
+                    highlight: null
+                },
+                {
+                    text: 'こ最初沈殿池からの汚水は、嫌気槽（けんきそう）と呼ばれるところに入ります',
+                    highlight: null
+                },
+                {
+                    text: '嫌気槽は、空気が少ない場所で、リンを取り除く役割を持っています',
+                    highlight: null
+                },
+                {
+                    text: '嫌気槽の底には、水中攪拌機（すいちゅうかくはんき）があって、汚水を混ぜています。',
+                    highlight: null
+                },
+                {
+                    text: '嫌気槽から出た汚水は、無酸素槽（むさんそそう）に入ります。',
+                    highlight: null
+                },
+                {
+                    text: '無酸素槽も、空気が少ない場所で、窒素を取り除く役割を持っています。',
+                    highlight: null
+                },
+                {
+                    text: '無酸素槽にも、水中攪拌機があります。',
+                    highlight: null
+                },
+                {
+                    text: '無酸素槽から出た汚水は、好気槽（こうきそう）に入ります。',
+                    highlight: null
+                },
+                {
+                    text: '好気槽には、家庭排水などに含まれる汚れを食べる微生物がいます。',
+                    highlight: null
+                },
+                {
+                    text: '底から空気を入れて、微生物を増やし、水をきれいにしています。',
+                    highlight: null
+                },
+                {
+                    text: 'ふわふわしているのは、代表的で特徴のある微生物のイラストです。',
+                    highlight: null
+                },
+                {
+                    text: 'この微生物たちを活性汚泥と言います。',
+                    highlight: null
+                },
+                {
+                    text: '増えた活性汚泥は、最終沈殿池で集めて、汚泥としてリサイクルします。',
+                    highlight: null
+                },
+            ];
+
+            // キャプションコントローラーを初期化（8秒ごとに切り替え）
+            new CaptionController(captions, 8000);
+        });
+    </script>
+</body>
+</html>

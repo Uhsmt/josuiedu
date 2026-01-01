@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浄水システム - 最終沈殿池</title>
+    <link rel="stylesheet" href="../shared/common.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-button">←</a>
+
+    <!-- アニメーションエリア（最上部） -->
+    <div class="animation-section">
+        <div class="animation-area">
+            <div class="animation-container-wrapper">
+                <!-- ベース画像 -->
+                <img src="../../material/03_base_v2.svg" alt="最終沈殿池ベース" class="base-image">
+
+                <!-- スイスイくんアニメーション-->
+                <div class="suisui-container" id="suisuiContainer">
+                </div>
+
+                <!-- スクレーパーアニメーション用コンテナ -->
+                <div class="scraper-container" id="scraperContainer">
+                    <!-- 台形のトラックとブレード（動的に生成される） -->
+                </div>
+
+                <!-- 説明用レイヤー -->
+                <div class="explanation-layer">
+                    <!-- 吹き出し -->
+                    <div class="explanation-bubble " id="bubble-1">消毒・放流</div>
+                    <div class="explanation-bubble " id="bubble-2">汚泥処理へ</div>
+                    <div class="explanation-bubble " id="bubble-3">反応槽から</div>
+                    <div class="explanation-bubble " id="bubble-4">生物反応槽へ<br>(返送汚泥)</div>
+                    <div class="explanation-bubble " id="bubble-5">汚泥処理施設へ</div>
+                    <!-- 矢印 -->
+                    <img src="../../material/allow_left_long.svg" class="arrow" id="arrow-1" alt="上矢印">
+                    <img src="../../material/allow_top.svg" class="arrow" id="arrow-2" alt="上矢印">
+                    <img src="../../material/allow_left_long.svg" class="arrow" id="arrow-3" alt="左矢印長">
+                </div>
+
+                <!-- ハイライトエリア（説明文に連動して表示） -->
+                <div class="highlight-layer" id="highlightLayer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 説明エリア（下部固定） -->
+    <div class="description-section">
+        <h1 class="title">最終沈殿池</h1>
+        <div class="caption-area">
+            <p class="caption" id="captionText">
+                生物反応槽で増えた微生物（活性汚泥）を沈めます。水は透明になります。
+            </p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        window.scraperConfig = { reverse: true };
+    </script>
+    <script src="../shared/scraper.js"></script>
+    <script src="../shared/caption-controller.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            new ShochinAnimation(window.scraperConfig);
+
+            // 説明文のデータ（後で追加予定）
+            const captions = [
+                {
+                    text: '生物反応槽で増えた微生物（活性汚泥）を沈めます。水は透明になります。',
+                    highlight: null
+                }
+            ];
+
+            // キャプションコントローラーを初期化（8秒ごとに切り替え）
+            new CaptionController(captions, 8000);
+        });
+    </script>
+</body>
+</html>

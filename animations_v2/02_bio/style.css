@@ -1,0 +1,283 @@
+/* 各吹き出しの位置設定 */
+#bubble-aerobic { top: 270px; left: 255px; }
+#bubble-anaerobic { top: 270px; left: 590px; }
+#bubble-anaerobic-strict { top: 270px; left: 820px; }
+#bubble-from-final { top: 140px; left: 800px; }
+#bubble-from-first { top: 205px; left: 930px; }
+#bubble-mixer { top: 650px; left: 820px; }
+#bubble-diffuser { top: 650px; left: 330px; }
+#bubble-to-final { top: 200px; left: -30px; }
+
+/* アニメーションレイヤー群のベーススタイル */
+.bubble-animation-layer,
+.microbe-animation-layer,
+.vortex-animation-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1000px;
+    height: 750px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* 1. 気泡アニメーション */
+.bubble-tank {
+    position: absolute;
+    width: 170px;
+    height: 350px;
+    background: transparent;
+    border-radius: 4px;
+}
+
+.bubble-tank canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: transparent;
+    border-radius: 4px;
+}
+
+/* 散気装置の位置 */
+#diffuser-1 {
+    bottom: 188px;
+    left: 130px;
+}
+
+#diffuser-2 {
+    bottom: 189px;
+    left: 290px;
+}
+
+/* 2. 微生物アニメーション */
+.microbe {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    opacity: 0.8;
+}
+
+.microbe.floating {
+    animation: float 6s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0.8;
+    }
+    25% {
+        transform: translate(10px, -5px) rotate(90deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(5px, -10px) rotate(180deg);
+        opacity: 0.6;
+    }
+    75% {
+        transform: translate(-8px, -3px) rotate(270deg);
+        opacity: 0.9;
+    }
+}
+
+#microbe-area {
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    margin-top: 280px;
+    margin-left: 90px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* 微生物をmicrobe-area内で相対位置に配置 */
+#microbe-area .microbe {
+    position: absolute;
+    opacity: 0; /* 初期状態は透明 */
+    width: 10%;
+    height: auto;
+}
+
+/* 微生物の初期位置（microbe-area内での相対位置） */
+#microbe-1 { top: 20px; left: 50px; animation-delay: 0s; }
+#microbe-2 { top: 80px; left: 120px; animation-delay: 1s; }
+#microbe-3 { top: 150px; left: 200px; animation-delay: 2s; }
+#microbe-4 { top: 200px; left: 80px; animation-delay: 3s; }
+#microbe-5 { top: 120px; left: 300px; animation-delay: 4s; }
+
+
+/* フェードイン用アニメーション（1回のみ） */
+@keyframes fadeIn1 { 0% { opacity: 0; } 100% { opacity: 0.8; } }
+@keyframes fadeIn2 { 0% { opacity: 0; } 100% { opacity: 0.7; } }
+@keyframes fadeIn3 { 0% { opacity: 0; } 100% { opacity: 0.9; } }
+@keyframes fadeIn4 { 0% { opacity: 0; } 100% { opacity: 0.6; } }
+@keyframes fadeIn5 { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+/* 各微生物のランダムな軌道での等速運動アニメーション（ループ用、opacityなし） */
+@keyframes swimLoop1 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    12.5% { transform: translate(45px, -20px) rotate(45deg); }
+    25% { transform: translate(70px, 10px) rotate(90deg); }
+    37.5% { transform: translate(60px, 40px) rotate(135deg); }
+    50% { transform: translate(20px, 50px) rotate(180deg); }
+    62.5% { transform: translate(-20px, 35px) rotate(225deg); }
+    75% { transform: translate(-40px, 10px) rotate(270deg); }
+    87.5% { transform: translate(-30px, -25px) rotate(315deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes swimLoop2 {
+    0% { transform: translate(0, 0) rotate(30deg); }
+    14% { transform: translate(-30px, 20px) rotate(80deg); }
+    28% { transform: translate(-50px, 45px) rotate(130deg); }
+    42% { transform: translate(-35px, 65px) rotate(180deg); }
+    57% { transform: translate(0, 55px) rotate(230deg); }
+    71% { transform: translate(35px, 30px) rotate(280deg); }
+    85% { transform: translate(50px, 5px) rotate(330deg); }
+    100% { transform: translate(0, 0) rotate(390deg); }
+}
+
+@keyframes swimLoop3 {
+    0% { transform: translate(0, 0) rotate(60deg); }
+    16% { transform: translate(25px, -15px) rotate(120deg); }
+    33% { transform: translate(55px, -25px) rotate(180deg); }
+    50% { transform: translate(70px, 0) rotate(240deg); }
+    66% { transform: translate(50px, 25px) rotate(300deg); }
+    83% { transform: translate(20px, 15px) rotate(360deg); }
+    100% { transform: translate(0, 0) rotate(420deg); }
+}
+
+@keyframes swimLoop4 {
+    0% { transform: translate(0, 0) rotate(90deg); }
+    20% { transform: translate(-25px, -30px) rotate(150deg); }
+    40% { transform: translate(-10px, -50px) rotate(210deg); }
+    60% { transform: translate(20px, -45px) rotate(270deg); }
+    80% { transform: translate(40px, -20px) rotate(330deg); }
+    100% { transform: translate(0, 0) rotate(450deg); }
+}
+
+@keyframes swimLoop5 {
+    0% { transform: translate(0, 0) rotate(120deg); }
+    25% { transform: translate(-35px, 25px) rotate(210deg); }
+    50% { transform: translate(-45px, 60px) rotate(300deg); }
+    75% { transform: translate(-20px, 75px) rotate(390deg); }
+    100% { transform: translate(0, 0) rotate(480deg); }
+}
+
+/* ランダムフェードアウト/イン付きの泳ぎアニメーション（1~3秒消失、3秒以上間隔） */
+@keyframes swimWithFade1 {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.8; }
+    12.5% { transform: translate(45px, -20px) rotate(45deg); opacity: 0.8; }
+    25% { transform: translate(70px, 10px) rotate(90deg); opacity: 0.8; }
+    30% { transform: translate(65px, 20px) rotate(108deg); opacity: 0; }
+    40% { transform: translate(50px, 45px) rotate(144deg); opacity: 0; }
+    45% { transform: translate(40px, 50px) rotate(162deg); opacity: 0.8; }
+    62.5% { transform: translate(-20px, 35px) rotate(225deg); opacity: 0.8; }
+    87.5% { transform: translate(-30px, -25px) rotate(315deg); opacity: 0.8; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.8; }
+}
+
+@keyframes swimWithFade2 {
+    0% { transform: translate(0, 0) rotate(30deg); opacity: 0.7; }
+    14% { transform: translate(-30px, 20px) rotate(80deg); opacity: 0.7; }
+    42% { transform: translate(-35px, 65px) rotate(180deg); opacity: 0.7; }
+    57% { transform: translate(0, 55px) rotate(230deg); opacity: 0.7; }
+    65% { transform: translate(20px, 40px) rotate(254deg); opacity: 0; }
+    75% { transform: translate(30px, 25px) rotate(286deg); opacity: 0; }
+    80% { transform: translate(35px, 20px) rotate(302deg); opacity: 0.7; }
+    100% { transform: translate(0, 0) rotate(390deg); opacity: 0.7; }
+}
+
+@keyframes swimWithFade3 {
+    0% { transform: translate(0, 0) rotate(60deg); opacity: 0.9; }
+    16% { transform: translate(25px, -15px) rotate(120deg); opacity: 0.9; }
+    25% { transform: translate(45px, -22px) rotate(150deg); opacity: 0; }
+    35% { transform: translate(60px, -20px) rotate(195deg); opacity: 0; }
+    40% { transform: translate(65px, -15px) rotate(204deg); opacity: 0.9; }
+    66% { transform: translate(50px, 25px) rotate(300deg); opacity: 0.9; }
+    83% { transform: translate(20px, 15px) rotate(360deg); opacity: 0.9; }
+    100% { transform: translate(0, 0) rotate(420deg); opacity: 0.9; }
+}
+
+@keyframes swimWithFade4 {
+    0% { transform: translate(0, 0) rotate(90deg); opacity: 0.6; }
+    20% { transform: translate(-25px, -30px) rotate(150deg); opacity: 0.6; }
+    50% { transform: translate(-5px, -50px) rotate(225deg); opacity: 0; }
+    58% { transform: translate(8px, -48px) rotate(249deg); opacity: 0; }
+    63% { transform: translate(15px, -46px) rotate(264deg); opacity: 0.6; }
+    80% { transform: translate(40px, -20px) rotate(330deg); opacity: 0.6; }
+    100% { transform: translate(0, 0) rotate(450deg); opacity: 0.6; }
+}
+
+@keyframes swimWithFade5 {
+    0% { transform: translate(0, 0) rotate(120deg); opacity: 1; }
+    25% { transform: translate(-35px, 25px) rotate(210deg); opacity: 1; }
+    40% { transform: translate(-45px, 50px) rotate(264deg); opacity: 0; }
+    50% { transform: translate(-45px, 65px) rotate(315deg); opacity: 0; }
+    58% { transform: translate(-42px, 70px) rotate(336deg); opacity: 1; }
+    75% { transform: translate(-20px, 75px) rotate(390deg); opacity: 1; }
+    100% { transform: translate(0, 0) rotate(480deg); opacity: 1; }
+}
+
+/* 各微生物に初回フェードイン + ランダムフェード付き無限ループアニメーションを適用 */
+#microbe-1 {
+    animation: fadeIn1 0.5s ease-out 0s forwards, swimWithFade1 12s linear 0.5s infinite;
+}
+
+#microbe-2 {
+    animation: fadeIn2 0.5s ease-out 1.6s forwards, swimWithFade2 14s linear 2.1s infinite;
+}
+
+#microbe-3 {
+    animation: fadeIn3 0.5s ease-out 3.2s forwards, swimWithFade3 10s linear 3.7s infinite;
+}
+
+#microbe-4 {
+    animation: fadeIn4 0.5s ease-out 4.8s forwards, swimWithFade4 16s linear 5.3s infinite;
+}
+
+#microbe-5 {
+    animation: fadeIn5 0.5s ease-out 6.4s forwards, swimWithFade5 13s linear 6.9s infinite;
+}
+
+/* 3. 渦アニメーション */
+.vortex-container {
+    position: absolute;
+    width: 150px;
+    height: 375px;
+    pointer-events: none;
+}
+
+.vortex-path {
+    fill: none;
+    stroke: #eef6ff;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 12 8;
+    animation: vortexFlow 0.5s linear infinite;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
+}
+
+@keyframes vortexFlow {
+    to {
+        stroke-dashoffset: -20;
+    }
+}
+
+/* 渦の位置 */
+#vortex-anaerobic {
+    top: 220px;
+    left: 560px;
+}
+
+#vortex-anoxic {
+    top: 220px;
+    left: 790px;
+}
+
+.caption-microbes img{
+    width:100px;
+}

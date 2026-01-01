@@ -1,0 +1,35 @@
+/* 吹き出しと矢印の位置（1000x750基準） */
+#bubble-biological {
+    top: 17%;
+    left: 0%;
+}
+
+#bubble-sludge-treatment1 {
+    top: 2%;
+    left: 45%;
+}
+
+#bubble-inflow {
+    top: 17%;
+    right: -5%;
+}
+
+#bubble-sludge-treatment2 {
+    top: 75%;
+    left: 90%;
+}
+
+#arrow-1 {
+    top: 12%;
+    left: 0%;
+}
+
+#arrow-2 {
+    top: 8%;
+    left: 45%;
+}
+
+#arrow-3 {
+    top: 12%;
+    left: 95%;
+}
