@@ -257,6 +257,7 @@ body {
   color: white;
   padding: clamp(20px, 4vh, 40px) clamp(20px, 4vw, 40px);
   width: 100%;
+  height: 70%;
 }
 .caption {
   font-size: clamp(14px, 1.8vw, 24px);
