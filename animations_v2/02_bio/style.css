@@ -53,12 +53,11 @@
 /* 1. 気泡アニメーション */
 .bubble-tank {
     position: absolute;
-    width: 170px;
-    height: 350px;
-    background: transparent;
+    width: 45%;
+    height: 49%;
     border-radius: 4px;
-    bottom: 20%;
-    left: 25%;
+    top: 27%;
+    left: 3%;
 }
 
 .bubble-tank canvas {
@@ -265,7 +264,7 @@
 /* 3. 渦アニメーション */
 .vortex-container {
     position: absolute;
-    width: 17%;
+    width: 22%;
     height: 55%;
     pointer-events: none;
 }
@@ -273,28 +272,28 @@
 .vortex-path {
     fill: none;
     stroke: #eef6ff;
-    stroke-width: 3;
+    stroke-width: 5;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-dasharray: 12 8;
-    animation: vortexFlow 0.5s linear infinite;
+    stroke-dasharray: 1 12;
+    animation: vortexFlow 1s linear infinite;
     filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
 }
 
 @keyframes vortexFlow {
     to {
-        stroke-dashoffset: -20;
+        stroke-dashoffset: -10;
     }
 }
 
 /* 渦の位置 */
 #vortex-anaerobic {
-    top: 26%;
-    left: 53%;}
-
+    top: 27%;
+    left: 51%;
+}
 #vortex-anoxic {
-    top: 26%;
-    left: 77%;
+    top: 27%;
+    left: 75.5%;
 }
 
 .caption-microbes img{
