@@ -23,7 +23,7 @@ class GravelAnimation {
         this.config = {
             travelSpawnRate: 0.025, // 旅する砂利の生成確率（さらに半分に）
             spawnRate: 0.05,       // 1フレームあたりの生成確率（少なく）area1,2,3用
-            spawnRate4: 0.3,       // area4の生成確率（元通り）
+            spawnRate4: 0.15,      // area4の生成確率（半分に）
             particleSize: 12,      // 砂利のベースサイズ（px）
             sizeVariation: 6,      // サイズのランダム幅（±3px）
             scraperSpeed: 0.8,     // スクレーパーの速度と一致（area1,2,3用）
@@ -34,7 +34,7 @@ class GravelAnimation {
             floatSpeed: 0.5,       // 浮上速度
             fadeSpeed: 0.02,       // フェードアウト速度
             maxParticles: 100,     // 各エリアの最大パーティクル数
-            initialParticles4: 40, // area4の初期砂利数（元通り）
+            initialParticles4: 20, // area4の初期砂利数（半分に）
             initialTravelParticles: 10  // area1,2,3の各エリアの初期砂利数（さらに半分に）
         };
 
@@ -246,7 +246,9 @@ class GravelAnimation {
             switch(area.direction) {
                 case 'down':  // area4: 上から下、右半分から発生して左下に広がる
                     speedY = this.config.fallSpeed + (Math.random() - 0.5) * this.config.speedVariation * 2;
-                    speedX = -(Math.random() * 0.5);  // 左方向への速度（0～-0.5）
+                    // 底に到達する頃に左端に到達する程度の左方向速度
+                    const maxLeftDrift = speedY * (containerWidth * 0.8) / containerHeight;
+                    speedX = -(Math.random() * maxLeftDrift);
                     break;
                 case 'right':  // area3: 左から右
                     speedX = this.config.scraperSpeed + (Math.random() - 0.5) * this.config.speedVariation;
@@ -319,7 +321,9 @@ class GravelAnimation {
                 x = containerWidth / 2 + Math.random() * (containerWidth / 2 - radius);  // 右半分から
                 y = radius;
                 speedY = this.config.fallSpeed + (Math.random() - 0.5) * this.config.speedVariation * 2;
-                speedX = -(Math.random() * 0.5);  // 左方向への速度（0～-0.5）
+                // 底に到達する頃に左端に到達する程度の左方向速度
+                const maxLeftDrift4 = speedY * (containerWidth * 0.8) / containerHeight;
+                speedX = -(Math.random() * maxLeftDrift4);
                 break;
             case 'right':  // area3: 左から右
                 x = radius;

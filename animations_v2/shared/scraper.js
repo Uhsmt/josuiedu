@@ -279,7 +279,7 @@ class ShochinAnimation {
                     width: ${thickness}px;
                     height: ${size}px;
                     background: black;
-                    right: 0;
+                    left: 0;
                     top: 0;
                 }
                 .blade-diagonal::after {
