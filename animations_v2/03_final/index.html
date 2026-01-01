@@ -12,6 +12,16 @@
 
     <!-- アニメーションエリア（最上部） -->
     <div class="animation-section">
+        <!-- リファレンスパネル（左端固定） -->
+        <div class="reference-panel">
+            <div class="ref-item">
+                <img src="../../material/suisui1.png" alt="スイスイ" id="suisui-ref">
+            </div>
+            <div class="ref-item">
+                <span>下水道マスコットキャラクター</span>
+                <br>[スイスイ]
+                </div>
+        </div>
         <div class="animation-area">
             <div class="animation-container-wrapper">
                 <!-- ベース画像 -->
@@ -19,6 +29,7 @@
 
                 <!-- スイスイくんアニメーション-->
                 <div class="suisui-container" id="suisuiContainer">
+                    <div id="suisui-area"></div>
                 </div>
 
                 <!-- スクレーパーアニメーション用コンテナ -->
@@ -69,9 +80,29 @@
             // 説明文のデータ（後で追加予定）
             const captions = [
                 {
-                    text: '生物反応槽で増えた微生物（活性汚泥）を沈めます。水は透明になります。',
+                    text: 'これは、最終沈殿池を横から見た様子です。',
                     highlight: null
-                }
+                },
+                {
+                    text: 'ゆっくり流して活性汚泥を沈ませて行きます。',
+                    highlight: null
+                },
+                {
+                    text: '沈んだ汚泥は、汚泥処理施設に送ります。',
+                    highlight: null
+                },
+                {
+                    text: '水に浮く汚泥も、取り除いていきます。',
+                    highlight: null
+                },
+                {
+                    text: '汚泥を集めるため、掻き寄せ機が回っています',
+                    highlight: null
+                },
+                {
+                    text: '砂ろ過して、紫外線消毒をして、放流します。',
+                    highlight: null
+                },
             ];
 
             // キャプションコントローラーを初期化（8秒ごとに切り替え）

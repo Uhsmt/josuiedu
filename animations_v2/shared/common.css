@@ -110,21 +110,6 @@ body {
   z-index: 100;
 }
 
-.explanation-bubble {
-  position: absolute;
-  background: #ffffff;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: clamp(12px, 1.5vw, 16px);
-  font-weight: 600;
-  color: #222;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  white-space: nowrap;
-  z-index: 10;
-  border: 2px solid #e0e0e0;
-  transform: translate(-50%);
-}
-
 .arrow {
   position: absolute;
   width: auto;
@@ -145,6 +130,7 @@ body {
     white-space: nowrap;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     z-index: 5;
+    transform: translate(-50%);
 }
 
 /* 下向き尻尾 */
@@ -268,23 +254,12 @@ body {
 
 .caption-area {
   flex-shrink: 0;
-  background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
   color: white;
   padding: clamp(20px, 4vh, 40px) clamp(20px, 4vw, 40px);
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
   width: 100%;
 }
-
 .caption {
-  font-size: clamp(14px, 2vw, 24px);
-  text-align: left;
-  line-height: 1.6;
-  margin: 0;
-  font-weight: 400;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-}
-.caption {
-  font-size: clamp(14px, 1.8vw, 18px);
+  font-size: clamp(14px, 1.8vw, 24px);
   line-height: 1.5;
   color: #ffffff;
   margin: 0;
@@ -309,6 +284,47 @@ body {
 .caption.fade-in-start {
   opacity: 0;
   transform: translateY(20px);
+}
+
+
+/* リファレンスパネル（左端固定） */
+.reference-panel {
+  position: absolute;
+  top: 3%;
+  height: 75%;
+  left: 2%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 15px 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.ref-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.ref-item:last-child {
+  margin-bottom: 0;
+}
+
+.ref-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 5px;
+}
+
+.ref-item span {
+  font-size: 11px;
+  color: #333;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.2;
 }
 
 /* 戻るボタン */
