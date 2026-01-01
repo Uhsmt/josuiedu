@@ -1,12 +1,41 @@
 /* 各吹き出しの位置設定 */
-#bubble-aerobic { top: 270px; left: 255px; }
-#bubble-anaerobic { top: 270px; left: 590px; }
-#bubble-anaerobic-strict { top: 270px; left: 820px; }
-#bubble-from-final { top: 140px; left: 800px; }
-#bubble-from-first { top: 205px; left: 930px; }
-#bubble-mixer { top: 650px; left: 820px; }
-#bubble-diffuser { top: 650px; left: 330px; }
-#bubble-to-final { top: 200px; left: -30px; }
+#bubble-aerobic { top: 90%; left: 25%; }
+#bubble-anaerobic { top: 90%; left: 62%; }
+#bubble-anaerobic-strict { top: 90%; left: 87%; }
+#bubble-1 { top: 18%; left: 0%; }
+#bubble-2 { top: 10%; left: 40%; }
+#bubble-3 { top: 16%; left: 85%; }
+#bubble-4 { top: 18%; left: 100%; }
+#bubble-5 { top: 81%; left: 41%; }
+#bubble-6 { top: 81%; left: 62%; }
+#bubble-7 { top: 81%; left: 86%; }
+
+
+#arrow-1{
+    top: 25%;
+    left: 0%;    
+}
+
+#arrow-2{
+    top: 25%;
+    left: 49%;    
+}
+
+#arrow-3{
+    top: 25%;
+    left: 73%;    
+}
+
+#arrow-4{
+    top: 25%;
+    left: 98%;    
+}
+
+#arrow-5{
+    top: 25%;
+    left: 85%;    
+    transform: translate(-50%, -50%) rotate(180deg);
+}
 
 /* アニメーションレイヤー群のベーススタイル */
 .bubble-animation-layer,
@@ -15,8 +44,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 1000px;
-    height: 750px;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
     z-index: 10;
 }
@@ -28,6 +57,8 @@
     height: 350px;
     background: transparent;
     border-radius: 4px;
+    bottom: 20%;
+    left: 25%;
 }
 
 .bubble-tank canvas {
@@ -38,17 +69,6 @@
     display: block;
     background: transparent;
     border-radius: 4px;
-}
-
-/* 散気装置の位置 */
-#diffuser-1 {
-    bottom: 188px;
-    left: 130px;
-}
-
-#diffuser-2 {
-    bottom: 189px;
-    left: 290px;
 }
 
 /* 2. 微生物アニメーション */
@@ -84,12 +104,12 @@
 
 #microbe-area {
     position: absolute;
-    width: 400px;
-    height: 300px;
-    margin-top: 280px;
-    margin-left: 90px;
+    width: 45%;
+    height: 53%;
     border-radius: 10px;
     overflow: hidden;
+    top: 28%;
+    left: 3%;
 }
 
 /* 微生物をmicrobe-area内で相対位置に配置 */
@@ -245,8 +265,8 @@
 /* 3. 渦アニメーション */
 .vortex-container {
     position: absolute;
-    width: 150px;
-    height: 375px;
+    width: 17%;
+    height: 55%;
     pointer-events: none;
 }
 
@@ -269,15 +289,54 @@
 
 /* 渦の位置 */
 #vortex-anaerobic {
-    top: 220px;
-    left: 560px;
-}
+    top: 26%;
+    left: 53%;}
 
 #vortex-anoxic {
-    top: 220px;
-    left: 790px;
+    top: 26%;
+    left: 77%;
 }
 
 .caption-microbes img{
     width:100px;
+}
+
+/* 微生物リファレンスパネル（左端固定） */
+.microbe-reference-panel {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 120px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 15px 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    pointer-events: none;
+}
+
+.microbe-ref-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.microbe-ref-item:last-child {
+    margin-bottom: 0;
+}
+
+.microbe-ref-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 5px;
+}
+
+.microbe-ref-item span {
+    font-size: 11px;
+    color: #333;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.2;
 }

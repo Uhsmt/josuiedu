@@ -122,6 +122,7 @@ body {
   white-space: nowrap;
   z-index: 10;
   border: 2px solid #e0e0e0;
+  transform: translate(-50%);
 }
 
 .arrow {
@@ -129,6 +130,7 @@ body {
   width: auto;
   height: clamp(20px, 3vw, 40px);
   z-index: 9;
+  transform: translate(-50%);
 }
 
 .explanation-bubble {

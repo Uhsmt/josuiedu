@@ -1,35 +1,35 @@
 /* 吹き出しと矢印の位置（1000x750基準） */
 #bubble-biological {
-    top: 17%;
-    left: 0%;
+    top: 12%;
+    left: 2%;
 }
 
 #bubble-sludge-treatment1 {
-    top: 2%;
-    left: 45%;
+    top: -3%;
+    left: 42%;
 }
 
 #bubble-inflow {
-    top: 17%;
-    right: -5%;
+    top: 12%;
+    left: 97%;
 }
 
 #bubble-sludge-treatment2 {
-    top: 75%;
-    left: 90%;
+    top: 85%;
+    left: 95%;
 }
 
 #arrow-1 {
-    top: 12%;
-    left: 0%;
+    top: 7%;
+    left: 2%;
 }
 
 #arrow-2 {
-    top: 8%;
-    left: 45%;
+    top: 3%;
+    left: 42%;
 }
 
 #arrow-3 {
-    top: 12%;
-    left: 95%;
+    top: 7%;
+    left: 97%;
 }

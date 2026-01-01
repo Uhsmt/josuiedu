@@ -12,6 +12,33 @@
 
     <!-- アニメーションエリア（最上部） -->
     <div class="animation-section">
+        <!-- 微生物リファレンスパネル（左端固定） -->
+        <div class="microbe-reference-panel">
+            <div class="microbe-ref-item">
+            活性汚泥
+            <br>(微生物たち)
+            </div>
+            <div class="microbe-ref-item">
+                <img src="../../material/microbe/kumamushi.png" alt="クマムシ">
+                <span>クマムシ</span>
+            </div>
+            <div class="microbe-ref-item">
+                <img src="../../material/microbe/mizinko.png" alt="ミジンコ">
+                <span>ミジンコ</span>
+            </div>
+            <div class="microbe-ref-item">
+                <img src="../../material/microbe/boruke.png" alt="ボルチセラ">
+                <span>ツリガネムシ</span>
+            </div>
+            <div class="microbe-ref-item">
+                <img src="../../material/microbe/alsera.png" alt="アスペラ">
+                <span>アルセラ</span>
+            </div>
+            <div class="microbe-ref-item">
+                <img src="../../material/microbe/alsera_side.png" alt="アスペラ(横)">
+                <span>アルセラ(横)</span>
+            </div>
+        </div>
         <div class="animation-area">
             <div class="animation-container-wrapper">
                 <!-- ベース画像 -->
@@ -22,9 +49,6 @@
                 <div class="bubble-animation-layer">
                     <div class="bubble-tank" id="diffuser-1">
                         <canvas id="bubble-canvas-1"></canvas>
-                    </div>
-                    <div class="bubble-tank" id="diffuser-2">
-                        <canvas id="bubble-canvas-2"></canvas>
                     </div>
                 </div>
 
@@ -70,18 +94,25 @@
                     <div class="explanation-bubble" id="bubble-aerobic">好気槽</div>
                     <div class="explanation-bubble" id="bubble-anaerobic">無酸素槽</div>
                     <div class="explanation-bubble" id="bubble-anaerobic-strict">嫌気槽</div>
-                    <div class="explanation-bubble bubble--bottom" id="bubble-from-final">最終沈殿池から</div>
-                    <div class="explanation-bubble bubble--bottom" id="bubble-from-first">最初沈殿池から</div>
-                    <div class="explanation-bubble bubble--top-long" id="bubble-mixer">水中撹拌機</div>
-                    <div class="explanation-bubble bubble--top-long" id="bubble-diffuser">散気装置</div>
-                    <div class="explanation-bubble bubble--bottom" id="bubble-to-final">最終沈殿池へ</div>
+                    <div class="explanation-bubble" id="bubble-1">最終沈殿池へ</div>
+                    <div class="explanation-bubble" id="bubble-2">循環水</div>
+                    <div class="explanation-bubble" id="bubble-3">返送汚泥</div>
+                    <div class="explanation-bubble" id="bubble-4">最初沈殿池から</div>
+                    <div class="explanation-bubble" id="bubble-5">散気装置</div>
+                    <div class="explanation-bubble" id="bubble-6">水中攪拌機</div>
+                    <div class="explanation-bubble" id="bubble-7">水中攪拌機</div>
 
                     <!-- 矢印 -->
-                    <img src="../../material/allow_left.svg" class="arrow" id="arrow-1" alt="左矢印">
+                    <img src="../../material/allow_left_long.svg" class="arrow" id="arrow-1" alt="左矢印">
+                    <img src="../../material/allow_left_middle.svg" class="arrow" id="arrow-2" alt="左矢印">
+                    <img src="../../material/allow_left_middle.svg" class="arrow" id="arrow-3" alt="左矢印">
+                    <img src="../../material/allow_left_long.svg" class="arrow" id="arrow-4" alt="左矢印">                                                            
+                    <img src="../../material/allow_top.svg" class="arrow" id="arrow-5" alt="下矢印">                                                            
                 </div>
 
                 <!-- ハイライトエリア（説明文に連動して表示） -->
                 <div class="highlight-layer" id="highlightLayer"></div>
+
             </div>
         </div>
     </div>

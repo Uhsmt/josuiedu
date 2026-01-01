@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 700 396" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:1.5;">
-    <g id="_レイヤー_1_" serif:id="_レイヤー_1" transform="matrix(1,0,0,1,-37.01,-0.425)">
+<svg width="100%" height="100%" viewBox="0 0 700 480" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g id="_レイヤー_1_" serif:id="_レイヤー_1" transform="matrix(1,0,0,1,-37.01,41.575)">
         <g transform="matrix(1,0,0,1.13719,0,-50.48193)">
             <rect x="51.35" y="112.85" width="331.65" height="255.12" style="fill:rgb(245,204,144);"/>
         </g>
@@ -12,17 +12,17 @@
             <rect x="553.09" y="112.85" width="170.08" height="255.12" style="fill:rgb(225,173,104);"/>
         </g>
     </g>
-    <g transform="matrix(0.934605,0,0,2.192308,8.239782,-61.884615)">
-        <g transform="matrix(1.069971,-0,-0,0.45614,-8.816327,28.22807)">
-            <path d="M482.5,58L469,85L455.5,58L482.5,58Z" style="fill:rgb(198,113,0);"/>
-            <path d="M126,78.423L126,50.998C126,38.297 136.297,28 148.998,28C210.455,28 378.225,28 443,28C457.359,28 469,39.641 469,54L469,63.4" style="fill:none;stroke:rgb(198,113,0);stroke-width:9px;"/>
+    <g transform="matrix(0.934605,0,0,2.192308,8.239782,-19.884615)">
+        <g transform="matrix(1.069971,-0,-0,0.45614,-8.816327,9.070175)">
+            <path d="M482.5,100L469,127L455.5,100L482.5,100Z" style="fill:rgb(198,113,0);"/>
+            <path d="M126,120.423L126,92.998C126,80.297 136.297,70 148.998,70C210.455,70 378.225,70 443,70C457.359,70 469,81.641 469,96L469,105.4" style="fill:none;stroke:rgb(198,113,0);stroke-width:9px;"/>
         </g>
     </g>
-    <g id="_レイヤー_2_" serif:id="_レイヤー_2" transform="matrix(1,0,0,1,-37.01,-1.425)">
+    <g id="_レイヤー_2_" serif:id="_レイヤー_2" transform="matrix(1,0,0,1,-37.01,40.575)">
         <g transform="matrix(1,0,0,1,37.01,0.425)">
             <rect x="0" y="55" width="18" height="342" style="fill:rgb(111,111,111);"/>
         </g>
-        <g transform="matrix(1,0,0,1,377.01,2.425)">
+        <g transform="matrix(1,0,0,0.973684,377.01,3.872368)">
             <rect x="0" y="55" width="18" height="342" style="fill:rgb(111,111,111);"/>
         </g>
         <g transform="matrix(1,0,0,1,548.01,1.425)">
@@ -35,7 +35,7 @@
             <rect x="0" y="368" width="699" height="30" style="fill:rgb(111,111,111);"/>
         </g>
     </g>
-    <g id="_レイヤー_3_" serif:id="_レイヤー_3" transform="matrix(1,0,0,1,-37.01,-0.425)">
+    <g id="_レイヤー_3_" serif:id="_レイヤー_3" transform="matrix(1,0,0,1,-37.01,41.575)">
         <g transform="matrix(1,0,0,1,52,4)">
             <rect x="249.37" y="337.01" width="48.59" height="11.34" style="fill:rgb(74,187,180);stroke:rgb(35,24,21);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;"/>
         </g>
