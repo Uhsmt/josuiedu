@@ -78,8 +78,8 @@ class BioReactionAnimation {
             spawnPerSec: 15,
             baseRise: 30,
             randomRise: 15,
-            baseSize: 2.4,  // 泡のベースサイズを2倍
-            growMax: 6.0,   // 泡の最大サイズも2倍
+            baseSize: 3.5,  // 泡のベースサイズを大きく
+            growMax: 8.0,   // 泡の最大サイズも大きく
             fadeRate: 1.2,
             wobbleAmp: 12,  // 揺らぎも2倍
             wobbleFreq: 1.0,
@@ -95,14 +95,15 @@ class BioReactionAnimation {
                 const W = canvas.width / dpr;
                 const H = canvas.height / dpr;
                 const nozzleW = W * CFG.nozzleWidthRatio;
-                this.x0 = W/2 + (Math.random()-0.5)*nozzleW;
+                this.x0 = W;  // 右端から発生
                 this.y = H + 8;
                 this.vy = -(CFG.baseRise + Math.random()*CFG.randomRise);
                 this.birth = t;
-                this.xDrift = (Math.random()*2-1);
+                this.xDrift = -Math.random();  // 左方向への拡散（0～-1）
                 this.wSeed = Math.random()*1000;
                 this.baseR = CFG.baseSize + Math.random()*1.2;
                 this.maxA = 1.0;
+                this.initialAlpha = 1.0;  // 初期不透明度100%
                 this.ecc = CFG.eccMin + Math.random()*(CFG.eccMax-CFG.eccMin);
             }
             update(dt, t) {
@@ -111,7 +112,8 @@ class BioReactionAnimation {
                 this.y += this.vy * dt;
                 const k = 1 - (this.y / H);
                 this.r = this.baseR * (1 + (CFG.growMax/CFG.baseSize - 1) * Math.min(1, k));
-                this.alpha = Math.max(0, this.maxA * (1 - k*CFG.fadeRate));
+                // 下部では不透明度100%、上部に行くほどフェードアウト
+                this.alpha = k < 0.3 ? this.initialAlpha : Math.max(0, this.maxA * (1 - k*CFG.fadeRate));
                 const fan = (this.y < H) ? (H - this.y) / H : 0;
                 const spread = (this.xDrift * CFG.fanSpread * fan * W);
                 const wobble = Math.sin(this.wSeed + t * CFG.wobbleFreq) * CFG.wobbleAmp * k;
@@ -125,7 +127,7 @@ class BioReactionAnimation {
                 ctx.scale(1, this.ecc);
                 ctx.beginPath();
                 ctx.arc(0, 0, this.r, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                ctx.fillStyle = 'rgba(173, 216, 230, 0.9)';
                 ctx.fill();
                 ctx.restore();
                 ctx.globalAlpha = 1;
