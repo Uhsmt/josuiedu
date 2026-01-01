@@ -391,6 +391,50 @@ body {
   }
 }
 
+/* 砂利アニメーションレイヤー */
+.gravel-animation-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2; /* base-imageの上、scraper-containerの下 */
+}
+
+.gravel-area {
+  position: absolute;
+}
+
+/* 4つのエリアのデフォルト位置（後で調整） */
+#gravel-area-1 {
+  top: 9%;
+  left: 29%;
+  width: 35%;
+  height: 7%;
+}
+
+#gravel-area-2 {
+  top: 9%;
+  left: 60%;
+  width: 4%;
+  height: 50%;
+}
+
+#gravel-area-3 {
+  top: 55%;
+  left: 5%;
+  width: 59%;
+  height: 8%;
+}
+
+#gravel-area-4 {
+  top: 9%;
+  left: 69%;
+  width: 27%;
+  height: 53%;
+}
+
 /* 動作軽減設定対応 */
 @media (prefers-reduced-motion: reduce) {
   .scraper-container {

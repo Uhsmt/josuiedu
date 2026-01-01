@@ -32,6 +32,14 @@
                     <div id="suisui-area"></div>
                 </div>
 
+                <!-- 砂利アニメーションレイヤー -->
+                <div class="gravel-animation-layer">
+                    <div class="gravel-area" id="gravel-area-1"></div>
+                    <div class="gravel-area" id="gravel-area-2"></div>
+                    <div class="gravel-area" id="gravel-area-3"></div>
+                    <div class="gravel-area" id="gravel-area-4"></div>
+                </div>
+
                 <!-- スクレーパーアニメーション用コンテナ -->
                 <div class="scraper-container" id="scraperContainer">
                     <!-- 台形のトラックとブレード（動的に生成される） -->
@@ -71,6 +79,7 @@
     <script>
         window.scraperConfig = { reverse: true };
     </script>
+    <script src="../shared/gravel.js"></script>
     <script src="../shared/scraper.js"></script>
     <script src="../shared/caption-controller.js"></script>
     <script>

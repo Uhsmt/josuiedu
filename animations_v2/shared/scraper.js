@@ -96,7 +96,7 @@ class ShochinAnimation {
         const BASE_CONFIG = {
             borderWidth: 9,
             bladeSize: 20,
-            bladeSpacing: 100,
+            bladeSpacing: 60,  // 間隔を狭めてブレード数をさらに増加
             speed: 0.8,
             // 台形の4つの頂点を定義
             trapezoid: {
@@ -549,8 +549,9 @@ class ShochinAnimation {
         angle = Math.atan2(leftDy, leftDx) * (180 / Math.PI);
 
         // ブレードの底辺がトラックに密着するように位置調整
-        x = this.track.bottomLeft.x + leftDx * ratio - this.CONFIG.bladeSize;
-        y = this.track.bottomLeft.y + leftDy * ratio - this.CONFIG.bladeSize/2;
+        // トラックの太さの半分だけ左上に移動
+        x = this.track.bottomLeft.x + leftDx * ratio - this.CONFIG.bladeSize - this.CONFIG.borderWidth / 2;
+        y = this.track.bottomLeft.y + leftDy * ratio - this.CONFIG.bladeSize/2 - this.CONFIG.borderWidth / 2;
         direction = 'diagonal';
 
         return { x, y, direction, angle };
