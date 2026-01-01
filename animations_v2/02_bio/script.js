@@ -62,14 +62,14 @@ class BioReactionAnimation {
         const dpr = Math.max(1, devicePixelRatio || 1);
         
         const CFG = {
-            spawnPerSec: 15,
-            baseRise: 30,
-            randomRise: 15,
-            baseSize: 3.5,  // 泡のベースサイズを大きく
-            growMax: 8.0,   // 泡の最大サイズも大きく
+            spawnPerSec: 10.5,  // 15 * 0.7
+            baseRise: 21,       // 30 * 0.7
+            randomRise: 10.5,   // 15 * 0.7
+            baseSize: 3.5,      // 泡のベースサイズを大きく
+            growMax: 8.0,       // 泡の最大サイズも大きく
             fadeRate: 1.2,
-            wobbleAmp: 12,  // 揺らぎも2倍
-            wobbleFreq: 1.0,
+            wobbleAmp: 12,      // 揺らぎも2倍
+            wobbleFreq: 0.7,    // 1.0 * 0.7
             nozzleWidthRatio: 0.2,  // 散気口をさらに狭く
             eccMin: 0.8,
             eccMax: 1.0,

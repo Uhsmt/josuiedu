@@ -5,6 +5,7 @@ class ShochinAnimation {
         this.blades = [];
         this.isPaused = false;
         this.reverseDirection = options.reverse || false;
+        this.lastTime = performance.now(); // 時間管理用
 
         this.init();
         this.setupControls();
@@ -97,7 +98,7 @@ class ShochinAnimation {
             borderWidth: 9,
             bladeSize: 20,
             bladeSpacing: 60,  // 間隔を狭めてブレード数をさらに増加
-            speed: 0.8,
+            speed: 0.56,  // 0.8 * 0.7
             // 台形の4つの頂点を定義
             trapezoid: {
                 topLeft: { x: 390, y: 120 },      // 上辺左端
@@ -557,7 +558,7 @@ class ShochinAnimation {
         return { x, y, direction, angle };
     }
 
-    updateBlades() {
+    updateBlades(deltaFactor = 1) {
         this.blades.forEach(blade => {
             const transform = this.getBladeTransform(blade.position);
 
@@ -574,9 +575,9 @@ class ShochinAnimation {
             }
 
             if (this.reverseDirection) {
-                blade.position = (blade.position - this.CONFIG.speed + this.perimeter) % this.perimeter;
+                blade.position = (blade.position - this.CONFIG.speed * deltaFactor + this.perimeter) % this.perimeter;
             } else {
-                blade.position = (blade.position + this.CONFIG.speed) % this.perimeter;
+                blade.position = (blade.position + this.CONFIG.speed * deltaFactor) % this.perimeter;
             }
         });
     }
@@ -586,11 +587,19 @@ class ShochinAnimation {
 
         const animate = () => {
             if (!this.isPaused) {
-                this.updateBlades();
+                const currentTime = performance.now();
+                const deltaTime = (currentTime - this.lastTime) / 1000; // 秒単位
+                this.lastTime = currentTime;
+
+                // 60fpsを基準とした係数
+                const deltaFactor = deltaTime * 60;
+
+                this.updateBlades(deltaFactor);
             }
             this.animationId = requestAnimationFrame(animate);
         };
 
+        this.lastTime = performance.now(); // 開始時刻をリセット
         animate();
     }
 

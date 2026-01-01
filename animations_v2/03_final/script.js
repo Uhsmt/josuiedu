@@ -3,6 +3,7 @@ class SuisuiAnimation {
     constructor() {
         this.container = document.getElementById('suisui-area');
         this.fishes = [];
+        this.lastTime = performance.now(); // 時間管理用
 
         // 魚の種類と数
         const fishTypes = [
@@ -37,30 +38,37 @@ class SuisuiAnimation {
             element: fishImg,
             x: Math.random() * (this.container.offsetWidth - 40),
             y: Math.random() * (this.container.offsetHeight - 40),
-            vx: (Math.random() - 0.5) * 2,
-            vy: (Math.random() - 0.5) * 2,
-            speed: 1 + Math.random() * 1,  // 1~2のランダムな速さ
+            vx: (Math.random() - 0.5) * 1.4,  // 2 * 0.7
+            vy: (Math.random() - 0.5) * 1.4,  // 2 * 0.7
+            speed: 0.7 + Math.random() * 0.7,  // (1~2) * 0.7
             wobblePhase: Math.random() * Math.PI * 2,
-            wobbleSpeed: 0.02 + Math.random() * 0.02
+            wobbleSpeed: 0.014 + Math.random() * 0.014  // (0.02 + 0.02) * 0.7
         };
 
         this.fishes.push(fish);
     }
 
     animate() {
+        const currentTime = performance.now();
+        const deltaTime = (currentTime - this.lastTime) / 1000; // 秒単位
+        this.lastTime = currentTime;
+
+        // 60fpsを基準とした係数
+        const deltaFactor = deltaTime * 60;
+
         const containerWidth = this.container.offsetWidth;
         const containerHeight = this.container.offsetHeight;
         const fishSize = 40;
 
         this.fishes.forEach(fish => {
             // 揺らぎを追加
-            fish.wobblePhase += fish.wobbleSpeed;
+            fish.wobblePhase += fish.wobbleSpeed * deltaFactor;
             const wobbleX = Math.sin(fish.wobblePhase) * 0.3;
             const wobbleY = Math.cos(fish.wobblePhase * 1.3) * 0.3;
 
             // 速度に揺らぎを加えて移動
-            fish.x += (fish.vx + wobbleX) * fish.speed;
-            fish.y += (fish.vy + wobbleY) * fish.speed;
+            fish.x += (fish.vx + wobbleX) * fish.speed * deltaFactor;
+            fish.y += (fish.vy + wobbleY) * fish.speed * deltaFactor;
 
             // 壁で反射（境界チェック）
             if (fish.x <= 0 || fish.x >= containerWidth - fishSize) {
@@ -74,14 +82,14 @@ class SuisuiAnimation {
 
             // ランダムに方向を微調整（ふらふら感を出す）
             if (Math.random() < 0.02) {
-                fish.vx += (Math.random() - 0.5) * 0.5;
-                fish.vy += (Math.random() - 0.5) * 0.5;
+                fish.vx += (Math.random() - 0.5) * 0.35;  // 0.5 * 0.7
+                fish.vy += (Math.random() - 0.5) * 0.35;  // 0.5 * 0.7
 
                 // 速度を制限
                 const currentSpeed = Math.sqrt(fish.vx * fish.vx + fish.vy * fish.vy);
-                if (currentSpeed > 2) {
-                    fish.vx = (fish.vx / currentSpeed) * 2;
-                    fish.vy = (fish.vy / currentSpeed) * 2;
+                if (currentSpeed > 1.4) {  // 2 * 0.7
+                    fish.vx = (fish.vx / currentSpeed) * 1.4;
+                    fish.vy = (fish.vy / currentSpeed) * 1.4;
                 }
             }
 

@@ -20,19 +20,22 @@ class GravelAnimation {
         // 浮上中の砂利
         this.floatingParticles = [];
 
+        // 時間管理用
+        this.lastTime = performance.now();
+
         this.config = {
             travelSpawnRate: 0.025, // 旅する砂利の生成確率（さらに半分に）
             spawnRate: 0.05,       // 1フレームあたりの生成確率（少なく）area1,2,3用
             spawnRate4: 0.15,      // area4の生成確率（半分に）
             particleSize: 12,      // 砂利のベースサイズ（px）
             sizeVariation: 6,      // サイズのランダム幅（±3px）
-            scraperSpeed: 0.8,     // スクレーパーの速度と一致（area1,2,3用）
-            fallSpeed: 0.6,        // 落下速度（area4用）
-            speedVariation: 0.1,   // 速度のランダム幅
+            scraperSpeed: 0.56,    // スクレーパーの速度と一致（area1,2,3用）0.8 * 0.7
+            fallSpeed: 0.42,       // 落下速度（area4用）0.6 * 0.7
+            speedVariation: 0.07,  // 速度のランダム幅 0.1 * 0.7
             wobbleAmplitude: 5,    // ふよふよの振幅（増加）
-            wobbleFrequency: 0.03, // ふよふよの周波数（少し遅く）
-            floatSpeed: 0.5,       // 浮上速度
-            fadeSpeed: 0.02,       // フェードアウト速度
+            wobbleFrequency: 0.021, // ふよふよの周波数（少し遅く）0.03 * 0.7
+            floatSpeed: 0.35,      // 浮上速度 0.5 * 0.7
+            fadeSpeed: 0.014,      // フェードアウト速度 0.02 * 0.7
             maxParticles: 100,     // 各エリアの最大パーティクル数
             initialParticles4: 20, // area4の初期砂利数（半分に）
             initialTravelParticles: 10  // area1,2,3の各エリアの初期砂利数（さらに半分に）
@@ -365,17 +368,17 @@ class GravelAnimation {
         area.particles.push(particleData);
     }
 
-    updateParticles() {
-        // 旅する砂利を確率的に生成
-        if (Math.random() < this.config.travelSpawnRate) {
+    updateParticles(deltaFactor = 1) {
+        // 旅する砂利を確率的に生成（deltaFactorに応じて生成確率を調整）
+        if (Math.random() < this.config.travelSpawnRate * deltaFactor) {
             this.createTravelingParticle();
         }
 
         // area4の通常の砂利を更新
         const area4 = this.areas.find(a => a.id === 'gravel-area-4');
         if (area4 && area4.active && area4.container) {
-            // area4の新しいパーティクルを生成
-            if (Math.random() < this.config.spawnRate4) {
+            // area4の新しいパーティクルを生成（deltaFactorに応じて生成確率を調整）
+            if (Math.random() < this.config.spawnRate4 * deltaFactor) {
                 this.createParticle(area4);
             }
 
@@ -384,11 +387,11 @@ class GravelAnimation {
             const containerHeight = area4.container.offsetHeight;
 
             area4.particles = area4.particles.filter(particle => {
-                particle.phase += this.config.wobbleFrequency;
+                particle.phase += this.config.wobbleFrequency * deltaFactor;
                 const wobbleX = Math.sin(particle.phase) * this.config.wobbleAmplitude;
 
-                particle.x += particle.speedX;
-                particle.y += particle.speedY;
+                particle.x += particle.speedX * deltaFactor;
+                particle.y += particle.speedY * deltaFactor;
 
                 const radius = particle.radius || this.config.particleSize / 2;
                 // CSS leftは要素の左端なので、中心位置から半径を引く
@@ -414,7 +417,7 @@ class GravelAnimation {
             const containerHeight = area.container.offsetHeight;
 
             // ふよふよの揺れ
-            particle.phase += this.config.wobbleFrequency;
+            particle.phase += this.config.wobbleFrequency * deltaFactor;
             let wobbleX = 0, wobbleY = 0;
             if (particle.speedX !== 0) {
                 wobbleY = Math.sin(particle.phase) * this.config.wobbleAmplitude;
@@ -423,8 +426,8 @@ class GravelAnimation {
             }
 
             // 位置を更新
-            particle.x += particle.speedX;
-            particle.y += particle.speedY;
+            particle.x += particle.speedX * deltaFactor;
+            particle.y += particle.speedY * deltaFactor;
 
             // エリアの境界チェック（円の端が境界に達したときに遷移）
             const radius = particle.radius || this.config.particleSize / 2;
@@ -476,10 +479,10 @@ class GravelAnimation {
         // 浮上中の砂利を更新
         this.floatingParticles = this.floatingParticles.filter(particle => {
             // 上に移動
-            particle.y -= this.config.floatSpeed;
+            particle.y -= this.config.floatSpeed * deltaFactor;
 
             // フェードアウト
-            particle.opacity -= this.config.fadeSpeed;
+            particle.opacity -= this.config.fadeSpeed * deltaFactor;
             particle.element.style.opacity = particle.opacity;
 
             // 位置を反映（CSS topは要素の上端なので、中心位置から半径を引く）
@@ -550,7 +553,14 @@ class GravelAnimation {
     }
 
     animate() {
-        this.updateParticles();
+        const currentTime = performance.now();
+        const deltaTime = (currentTime - this.lastTime) / 1000; // 秒単位
+        this.lastTime = currentTime;
+
+        // 60fpsを基準とした係数（deltaTimeが1/60秒のとき、deltaFactorは1になる）
+        const deltaFactor = deltaTime * 60;
+
+        this.updateParticles(deltaFactor);
         requestAnimationFrame(() => this.animate());
     }
 }
