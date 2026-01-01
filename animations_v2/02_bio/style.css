@@ -78,29 +78,6 @@
     opacity: 0.8;
 }
 
-.microbe.floating {
-    animation: float 6s infinite ease-in-out;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translate(0, 0) rotate(0deg);
-        opacity: 0.8;
-    }
-    25% {
-        transform: translate(10px, -5px) rotate(90deg);
-        opacity: 1;
-    }
-    50% {
-        transform: translate(5px, -10px) rotate(180deg);
-        opacity: 0.6;
-    }
-    75% {
-        transform: translate(-8px, -3px) rotate(270deg);
-        opacity: 0.9;
-    }
-}
-
 #microbe-area {
     position: absolute;
     width: 45%;
@@ -133,57 +110,6 @@
 @keyframes fadeIn3 { 0% { opacity: 0; } 100% { opacity: 0.9; } }
 @keyframes fadeIn4 { 0% { opacity: 0; } 100% { opacity: 0.6; } }
 @keyframes fadeIn5 { 0% { opacity: 0; } 100% { opacity: 1; } }
-
-/* 各微生物のランダムな軌道での等速運動アニメーション（ループ用、opacityなし） */
-@keyframes swimLoop1 {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    12.5% { transform: translate(45px, -20px) rotate(45deg); }
-    25% { transform: translate(70px, 10px) rotate(90deg); }
-    37.5% { transform: translate(60px, 40px) rotate(135deg); }
-    50% { transform: translate(20px, 50px) rotate(180deg); }
-    62.5% { transform: translate(-20px, 35px) rotate(225deg); }
-    75% { transform: translate(-40px, 10px) rotate(270deg); }
-    87.5% { transform: translate(-30px, -25px) rotate(315deg); }
-    100% { transform: translate(0, 0) rotate(360deg); }
-}
-
-@keyframes swimLoop2 {
-    0% { transform: translate(0, 0) rotate(30deg); }
-    14% { transform: translate(-30px, 20px) rotate(80deg); }
-    28% { transform: translate(-50px, 45px) rotate(130deg); }
-    42% { transform: translate(-35px, 65px) rotate(180deg); }
-    57% { transform: translate(0, 55px) rotate(230deg); }
-    71% { transform: translate(35px, 30px) rotate(280deg); }
-    85% { transform: translate(50px, 5px) rotate(330deg); }
-    100% { transform: translate(0, 0) rotate(390deg); }
-}
-
-@keyframes swimLoop3 {
-    0% { transform: translate(0, 0) rotate(60deg); }
-    16% { transform: translate(25px, -15px) rotate(120deg); }
-    33% { transform: translate(55px, -25px) rotate(180deg); }
-    50% { transform: translate(70px, 0) rotate(240deg); }
-    66% { transform: translate(50px, 25px) rotate(300deg); }
-    83% { transform: translate(20px, 15px) rotate(360deg); }
-    100% { transform: translate(0, 0) rotate(420deg); }
-}
-
-@keyframes swimLoop4 {
-    0% { transform: translate(0, 0) rotate(90deg); }
-    20% { transform: translate(-25px, -30px) rotate(150deg); }
-    40% { transform: translate(-10px, -50px) rotate(210deg); }
-    60% { transform: translate(20px, -45px) rotate(270deg); }
-    80% { transform: translate(40px, -20px) rotate(330deg); }
-    100% { transform: translate(0, 0) rotate(450deg); }
-}
-
-@keyframes swimLoop5 {
-    0% { transform: translate(0, 0) rotate(120deg); }
-    25% { transform: translate(-35px, 25px) rotate(210deg); }
-    50% { transform: translate(-45px, 60px) rotate(300deg); }
-    75% { transform: translate(-20px, 75px) rotate(390deg); }
-    100% { transform: translate(0, 0) rotate(480deg); }
-}
 
 /* ランダムフェードアウト/イン付きの泳ぎアニメーション（1~3秒消失、3秒以上間隔） */
 @keyframes swimWithFade1 {
