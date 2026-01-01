@@ -399,7 +399,7 @@ class ShochinAnimation {
 
     initAxleStyles() {
         const style = document.createElement('style');
-        const axleSize = this.CONFIG.borderWidth * 4;
+        const axleSize = this.CONFIG.borderWidth * 5;
         style.textContent = `
             .scraper-axle {
                 position: absolute;
@@ -453,10 +453,10 @@ class ShochinAnimation {
 
         // 台形の4つの角に軸を配置（トラックとボーダー内側の中間）
         const axlePositions = [
-            { x: this.track.topLeft.x - offset + inset, y: this.track.topLeft.y - offset + inset },           // 左上：右下に移動
-            { x: this.track.topRight.x - offset - inset, y: this.track.topRight.y - offset + inset },         // 右上：左下に移動
-            { x: this.track.bottomRight.x - offset - inset, y: this.track.bottomRight.y - offset - inset },   // 右下：左上に移動
-            { x: this.track.bottomLeft.x - offset + inset, y: this.track.bottomLeft.y - offset - inset }      // 左下：右上に移動
+            { x: this.track.topLeft.x - offset + inset, y: this.track.topLeft.y - offset + inset },           // 左上
+            { x: this.track.topRight.x - offset*2 - inset, y: this.track.topRight.y - offset + inset },         // 右上
+            { x: this.track.bottomRight.x - offset*2 - inset, y: this.track.bottomRight.y - offset*1.5 - inset },   // 右下
+            { x: this.track.bottomLeft.x + inset, y: this.track.bottomLeft.y - offset*1.5 - inset }      // 左下
         ];
 
         axlePositions.forEach((pos, index) => {
